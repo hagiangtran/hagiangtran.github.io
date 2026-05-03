@@ -37,7 +37,7 @@
   body.light .process-section { background: var(--mute); }
   body.light .about-visual { background: #e0ddd6; }
   body.light .work-card { background: #e0ddd6; }
-  body.light .contact-section::before { background: radial-gradient(ellipse 80% 60% at 50% 50%,rgba(255,60,30,.05),transparent); }
+  body.light .contact-section::before { background: radial-gradient(ellipse at center,rgba(255,60,30,.08) 0%,rgba(255,60,30,.02) 40%,transparent 70%); }
   body.light #loader { background: var(--bg); }
   body.light ::-webkit-scrollbar-track { background: var(--bg); }
   body.light ::-webkit-scrollbar-thumb { background: rgba(10,10,10,.2); }
@@ -88,7 +88,14 @@
 
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',sans-serif;overflow-x:hidden;cursor:none;transition:background .4s,color .4s;}
+  body{background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',sans-serif;overflow-x:hidden;cursor:none;transition:background .5s ease,color .5s ease;}
+
+  /* TRANSITION TOÀN TRANG KHI ĐỔI THEME */
+  body *:not(.toggle-track):not(.toggle-knob):not(.toggle-stars):not(.toggle-ground):not(.toggle-tree):not(.toggle-cloud):not(.toggle-cloud-body):not(.toggle-rays):not(.toggle-ray) {
+    transition-property: background-color, border-color, color, box-shadow, opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+  }
 
   /* TOGGLE BUTTON — DESKTOP & MOBILE */
   .theme-toggle-desktop,
@@ -285,21 +292,57 @@
 
   .fab-menu {
     display: flex; flex-direction: column; gap: 0.8rem;
-    position: absolute; bottom: 75px; 
-    opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.8);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-origin: bottom center; pointer-events: none;
+    position: absolute; bottom: 75px;
+    pointer-events: none;
   }
-  .fab-menu.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); pointer-events: auto; }
+  .fab-menu.open { pointer-events: auto; }
 
   .fab-item {
     width: 45px; height: 45px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    color: #fff; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: transform 0.2s, filter 0.2s;
+    color: var(--ink); text-decoration: none;
+    background: rgba(var(--ink-rgb), 0.06);
+    border: 1px solid rgba(var(--ink-rgb), 0.12);
+    backdrop-filter: blur(10px);
+    position: relative;
+    transform: scale(0); opacity: 0;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
   }
-  .fab-item:hover { transform: scale(1.15); filter: brightness(1.1); }
-  .fab-item svg { width: 22px; height: 22px; }
+
+  /* Pop từng item: thứ tự từ dưới lên (4→1) */
+  .fab-menu.open .fab-item:nth-child(4) { animation: fabPop 0.45s cubic-bezier(0.34,1.7,0.64,1) 0.02s forwards; }
+  .fab-menu.open .fab-item:nth-child(3) { animation: fabPop 0.45s cubic-bezier(0.34,1.7,0.64,1) 0.09s forwards; }
+  .fab-menu.open .fab-item:nth-child(2) { animation: fabPop 0.45s cubic-bezier(0.34,1.7,0.64,1) 0.16s forwards; }
+  .fab-menu.open .fab-item:nth-child(1) { animation: fabPop 0.45s cubic-bezier(0.34,1.7,0.64,1) 0.23s forwards; }
+
+  /* Thu lại khi đóng */
+  .fab-menu:not(.open) .fab-item { animation: fabCollapse 0.15s ease-in forwards !important; }
+
+  @keyframes fabPop {
+    0%   { transform: scale(0);    opacity: 0; }
+    100% { transform: scale(1);    opacity: 1; }
+  }
+  @keyframes fabCollapse {
+    from { transform: scale(1); opacity: 1; }
+    to   { transform: scale(0); opacity: 0; }
+  }
+
+  .fab-item:hover { transform: scale(1.15) !important; background: var(--accent); border-color: var(--accent); color: #fff; }
+  .fab-item svg { width: 18px; height: 18px; }
+
+  /* Label tooltip bên trái */
+  .fab-item::before {
+    content: attr(title);
+    position: absolute; right: calc(100% + 10px);
+    font-family: 'Roboto Mono', monospace;
+    font-size: .6rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink); opacity: 0;
+    white-space: nowrap;
+    transform: translateX(6px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+  }
+  .fab-item:hover::before { opacity: 0.45; transform: translateX(0); }
 
   .btn-messenger {
     width: 60px; height: 60px; border-radius: 50%;
@@ -311,6 +354,19 @@
   }
   .btn-messenger:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(255, 60, 30, 0.5); }
   
+  .fab-pulse-ring {
+    position: absolute; inset: -8px; border-radius: 50%;
+    border: 2px solid rgba(255,60,30,.5);
+    animation: fabPulse 2s ease-out infinite;
+    pointer-events: none;
+  }
+  .btn-messenger.open .fab-pulse-ring { animation: none; opacity: 0; }
+  @keyframes fabPulse {
+    0%   { transform: scale(1);    opacity: .6; }
+    70%  { transform: scale(1.35); opacity: 0; }
+    100% { transform: scale(1.35); opacity: 0; }
+  }
+  
   .btn-messenger svg {
     position: absolute; width: 28px; height: 28px;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
@@ -321,10 +377,9 @@
   .btn-messenger.open { background: var(--mute); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
 
   /* HERO */
-  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:8rem 3rem 4rem;position:relative;background:var(--bg);}
-  .hero-orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
-  .hero-left{display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;padding-top:6rem;}
-  .hero-right{display:flex;align-items:center;justify-content:center;position:relative;z-index:2;padding-top:5rem;}
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 3rem 5rem;position:relative;overflow:hidden;background:var(--bg);}
+  .hero-left{display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;padding-top:0;}
+  .hero-right{display:flex;align-items:center;justify-content:center;position:relative;z-index:2;padding-top:0;}
   .hero-visual{width:100%;max-width:440px;aspect-ratio:1;position:relative;}
   .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--mute) 1px,transparent 1px),linear-gradient(90deg,var(--mute) 1px,transparent 1px);background-size:80px 80px;opacity:.32;animation:gridMove 22s linear infinite;}
   @keyframes gridMove{from{background-position:0 0;}to{background-position:80px 80px;}}
@@ -351,7 +406,7 @@
   @keyframes glitch2{0%,85%,100%{transform:none;opacity:0;}86%{transform:translate(4px,0);opacity:.5;}88%{transform:translate(-4px,0);opacity:.5;}90%{transform:translate(2px,0);opacity:.5;}92%{transform:none;opacity:0;}}
 
   .hero-sub{margin-top:1.8rem;max-width:420px;font-size:.92rem;line-height:1.75;opacity:0;animation:fadeUp .9s .65s forwards;color:rgba(var(--ink-rgb),.5); min-height: 4rem;}
-  .hero-cta{margin-top:2.5rem;display:flex;align-items:center;gap:2rem;opacity:0;animation:fadeUp .9s .9s forwards;position:relative;z-index:6;}
+  .hero-cta{margin-top:2.5rem;display:flex;align-items:center;gap:2rem;opacity:0;animation:fadeUp .9s .9s forwards;}
   
   .magnetic { display: inline-flex; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform; }
   .btn-primary{align-items:center;gap:.7rem;padding:.9rem 2rem;background:var(--accent);color:#fff;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));}
@@ -376,7 +431,7 @@
   }
 
   /* MARQUEE BAND */
-  .marquee-band{background:var(--accent);overflow:hidden;padding:.7rem 0;position:relative;z-index:5;display:flex;}
+  .marquee-band{background:var(--accent);overflow:hidden;padding:.7rem 0;position:relative;z-index:10;display:flex;}
   .marquee-inner{display:flex;width:max-content;animation:marqueeRun 35s linear infinite;}
   .marquee-content{display:flex;}
   .marquee-content span{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;padding:0 2rem;white-space:nowrap;}
@@ -405,15 +460,18 @@
   .about-big-text {
     position: absolute;
     bottom: 2rem;
-    left: 2rem;
+    left: 1rem;
+    right: 1rem;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(4rem, 10vw, 7rem);
+    font-size: clamp(2rem, 5vw, 4.5rem);
     color: transparent;
     -webkit-text-stroke: 1px rgba(240, 236, 226, 0.12);
     pointer-events: none;
     text-transform: uppercase;
     white-space: nowrap;
+    overflow: hidden;
     z-index: 3;
+    letter-spacing: .04em;
   }
 
   /* NÚT HOLD TO DELETE DÀNH CHO MÁY TÍNH */
@@ -560,7 +618,7 @@
 
   /* CONTACT */
   .contact-section{position:relative;overflow:hidden;text-align:center;padding:10rem 3rem;background:var(--bg);}
-  .contact-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(255,60,30,.07),transparent);}
+  .contact-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-40%);width:700px;height:500px;background:radial-gradient(ellipse at center,rgba(255,60,30,.22) 0%,rgba(255,60,30,.08) 40%,transparent 70%);filter:blur(40px);pointer-events:none;z-index:0;}
   .contact-big{font-family:'Barlow Condensed',sans-serif;font-size:clamp(4rem,10vw,11rem);line-height:.9;color:transparent;-webkit-text-stroke:1px rgba(var(--ink-rgb),.08);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;animation:contactPulse 4s ease-in-out infinite alternate;}
   @keyframes contactPulse{from{opacity:.5;}to{opacity:1;}}
   .contact-section .section-tag{justify-content:center;}
@@ -584,14 +642,6 @@
   .reveal{opacity:0;transform:translateY(40px);transition:opacity .85s,transform .85s;}
   .reveal.visible{opacity:1;transform:translateY(0);}
 
-  /* MÀN HÌNH NHỎ - VỪA (tablet/laptop nhỏ) */
-  @media(max-width:1100px){
-    .about-inner{grid-template-columns:1fr;gap:2.5rem;}
-    .about-visual{aspect-ratio:4/3;max-height:420px;}
-    section{padding:6rem 2rem;}
-    h2{font-size:clamp(2.5rem,5vw,5rem);}
-  }
-
   /* TỐI ƯU MOBILE CHỐNG GIẬT LAG & RESPONSIVE NÚT HOLD TO DELETE */
   @media(max-width:768px){
     body{cursor:auto;}
@@ -611,8 +661,8 @@
     nav ul.open {right: 0;}
     nav ul a {font-size: 1.1rem; letter-spacing: .2em;}
 
-    .hero{grid-template-columns:1fr;padding:5.5rem 1.5rem 3rem;align-items:start;}
-    .hero-left{padding-top:.5rem;}
+    .hero{grid-template-columns:1fr;padding:6rem 1.5rem 3rem;align-items:start;}
+    .hero-left{padding-top:0;}
     .hero-right{padding-top:1.5rem;justify-content:center;}
     .hero-counter{display:none;}
     .hero-title{font-size:clamp(3.2rem,16vw,5.5rem);}
@@ -700,20 +750,26 @@
   </div>
   
   <div class="fab-menu" id="fabMenu">
-    <a href="https://zalo.me/0988770134" target="_blank" class="fab-item" style="background:#0068FF;" title="Zalo">
-      <span style="font-weight:900; font-size:1.1rem; font-family:sans-serif;">Z</span>
-    </a>
-    <a href="https://www.facebook.com/messages/t/trangiang0303" target="_blank" class="fab-item" style="background:#0084FF;" title="Messenger">
+    <!-- Zalo - chữ Z path -->
+    <a href="https://zalo.me/0988770134" target="_blank" class="fab-item" title="Zalo">
       <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2C6.477 2 2 6.145 2 11.26c0 2.898 1.496 5.476 3.823 7.111.168.118.283.3.31.503l.342 2.378c.038.267.335.412.553.27l2.587-1.428a.8.8 0 01.536-.089c.594.135 1.218.209 1.849.209 5.523 0 10-4.145 10-9.26S17.523 2 12 2zm1.06 9.07l-2.73 2.9c-.31.33-.84.34-1.16.03l-2.48-2.39c-.29-.28-.29-.74 0-1.02l2.73-2.9c.31-.33.84-.34 1.16-.03l2.48 2.39c.29.28.29.74 0 1.02z"/>
+        <path d="M4 5h16v2.5L8.5 17H20v2H4v-2.5L15.5 7H4V5z"/>
       </svg>
     </a>
-    <a href="sms:0988770134" class="fab-item" style="background:#4CAF50;" title="SMS">
+    <!-- Messenger - lightning bolt icon chính thức -->
+    <a href="https://www.facebook.com/messages/t/trangiang0303" target="_blank" class="fab-item" title="Messenger">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.36 2 2 6.13 2 11.2c0 2.9 1.37 5.5 3.52 7.22L5.18 22l3.68-2c.98.27 2.01.42 3.14.42 5.64 0 10-4.13 10-9.22C22 6.13 17.64 2 12 2zm1.18 12.41L10.56 11.7l-5.1 2.71 5.62-5.97 2.62 2.71 5.04-2.71-5.56 5.97z"/>
+      </svg>
+    </a>
+    <!-- SMS -->
+    <a href="sms:0988770134" class="fab-item" title="SMS">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
       </svg>
     </a>
-    <a href="https://t.me/ythgiang" target="_blank" class="fab-item" style="background:#0088cc;" title="Telegram">
+    <!-- Telegram -->
+    <a href="https://t.me/ythgiang" target="_blank" class="fab-item" title="Telegram">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
       </svg>
@@ -721,12 +777,13 @@
   </div>
 
   <div class="btn-messenger" id="fabMain" title="Liên hệ" role="button" aria-label="Mở menu liên hệ" aria-expanded="false" tabindex="0">
+    <div class="fab-pulse-ring"></div>
     <svg class="icon-chat" viewBox="0 0 24 24" fill="currentColor">
       <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
     </svg>
-    <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
+    <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
     </svg>
   </div>
 </div>
@@ -811,12 +868,10 @@
 <!-- HERO -->
 <main id="main-content">
 <section class="hero">
-  <div class="hero-orbs">
-    <div class="hero-grid"></div>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-  </div>
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
   <div class="hero-counter">Motion × Design × Story</div>
 
   <div class="hero-left">
@@ -894,7 +949,7 @@
   </div>
 </section>
 
-<!-- MARQUEE BAND (đặt sau hero, dưới fold) -->
+<!-- MARQUEE BAND -->
 <div class="marquee-band">
   <div class="marquee-inner">
     <div class="marquee-content">
@@ -965,11 +1020,12 @@
         </svg>
 
         <!-- ẢNH GIF GỐC -->
-        <img id="character-gif" src="character-walk.gif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:top center; transition: all 0.4s ease;" alt="Nhân vật hoạt hình Trần Hà Giang đang đi bộ">
+        <img id="character-gif" src="character-walk.gif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain; transition: all 0.4s ease;" alt="Nhân vật hoạt hình Trần Hà Giang đang đi bộ">
+      </div>
+
       </div>
 
       <div class="about-big-text">TRAN HA GIANG</div>
-      </div>
 
       <!-- NÚT HOLD TO DELETE -->
       <div id="hold-btn-container">
@@ -1295,7 +1351,7 @@
 <!-- CONTACT -->
 <section id="contact" class="contact-section">
   <div class="contact-big">CONNECT</div>
-  <div style="position:relative">
+  <div style="position:relative;z-index:1">
     <div class="section-tag">Liên hệ</div>
     <h2>Cùng tạo ra<br>điều gì đó</h2>
     <a class="contact-email" href="mailto:gt06954@gmail.com">gt06954@gmail.com</a>
@@ -1568,17 +1624,11 @@ if(isMobile) {
     body.light nav.scrolled { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
     .btn-back-to-top { backdrop-filter: none !important; }
     @keyframes gridMove { from{background-position:0 0;} to{background-position:0 0;} }
+    @keyframes orbFloat { from{transform:none;} to{transform:none;} }
     .orb { animation: none !important; filter: blur(60px) !important; }
     .marquee-inner { animation-duration: 60s !important; }
-    .hero-right { display: none !important; }
-    .hero { grid-template-columns: 1fr !important; }
   `;
   document.head.appendChild(style);
-  // Tắt toàn bộ SVG animations để tránh lag
-  document.querySelectorAll('animate, animateTransform, animateMotion').forEach(el => {
-    el.setAttribute('repeatCount', '0');
-    el.setAttribute('dur', '0.001s');
-  });
 }
 
 // LOADER
