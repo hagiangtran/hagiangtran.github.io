@@ -60,9 +60,10 @@
   body.light #stickman-face path { stroke: rgba(10,10,10,.35); fill: none; }
   body.light #character-stickman { stroke: rgba(10,10,10,.6); }
   body.light #character-stickman circle[fill] { fill: rgba(10,10,10,.6); }
-  body.light .process-anim-box svg { stroke: rgba(10,10,10,.35); }
-  body.light .process-anim-box svg circle[fill="rgba(240,236,226,.6)"],
-  body.light .process-anim-box svg circle[fill="rgba(240,236,226,.8)"] { fill: rgba(10,10,10,.4); stroke: none; }
+  body.light .process-anim-box svg { stroke: rgba(10,10,10,.3); }
+  body.light .process-anim-box svg .sm-eye { fill: rgba(10,10,10,.5); stroke: none; }
+  body.light .process-anim-box svg .sm-mouth { stroke: rgba(10,10,10,.4); fill: none; }
+  body.light .process-anim-box svg .sm-accent { stroke: var(--accent); }
   body.light .hero-visual svg text { fill: rgba(10,10,10,.3); }
   body.light .hero-visual svg rect[fill="rgba(240,236,226,.06)"] { fill: rgba(10,10,10,.06); }
 
@@ -542,39 +543,144 @@
   
   .about-text p{font-size:1rem;line-height:1.85;color:rgba(var(--ink-rgb),.6);margin-bottom:1.2rem; min-height: 3rem;}
   .stats{display:flex;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap;}
-  .spec-item{padding:.8rem 1.2rem;border-left:2px solid var(--accent);transition:background .2s;}
-  .spec-item:hover{background:rgba(255,60,30,.05);}
-  .spec-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;letter-spacing:.08em;color:var(--ink);}
-  .spec-sub{font-size:.72rem;color:rgba(var(--ink-rgb),.35);margin-top:.2rem;letter-spacing:.04em;}
+  .spec-item {
+    padding: .8rem 1.2rem;
+    border-left: 2px solid rgba(255,60,30,.25);
+    position: relative;
+    cursor: default;
+    transition: border-color .35s ease, background .35s ease, transform .35s cubic-bezier(0.34,1.56,0.64,1), box-shadow .35s ease;
+    overflow: hidden;
+  }
+  /* Thanh sáng quét ngang khi hover */
+  .spec-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,60,30,.07), transparent);
+    transition: left .5s ease;
+    pointer-events: none;
+  }
+  /* Dot accent góc trên phải */
+  .spec-item::after {
+    content: '';
+    position: absolute;
+    top: 8px; right: 10px;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--accent);
+    opacity: 0; transform: scale(0);
+    transition: opacity .3s ease .1s, transform .35s cubic-bezier(0.34,1.56,0.64,1) .1s;
+  }
+  .spec-item:hover {
+    border-color: var(--accent);
+    background: rgba(255,60,30,.04);
+    transform: translateX(5px);
+    box-shadow: -3px 0 14px rgba(255,60,30,.12);
+  }
+  .spec-item:hover::before { left: 150%; }
+  .spec-item:hover::after  { opacity: 1; transform: scale(1); }
+
+  .spec-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem; font-weight: 800; letter-spacing: .08em;
+    color: var(--ink);
+    transition: color .3s ease, letter-spacing .35s ease;
+  }
+  .spec-item:hover .spec-title {
+    color: var(--accent);
+    letter-spacing: .13em;
+  }
+  .spec-sub {
+    font-size: .72rem; color: rgba(var(--ink-rgb),.35);
+    margin-top: .2rem; letter-spacing: .04em;
+    transition: color .3s ease, opacity .3s ease;
+  }
+  .spec-item:hover .spec-sub {
+    color: rgba(var(--ink-rgb), .65);
+  }
 
   /* PROCESS */
-  .process-section{background:var(--mute);}
-  .process-steps{display:flex; justify-content: space-between; gap: 1rem; margin-top:3.5rem;}
-  .process-step{
-    flex:1; position:relative; padding:2rem 1.5rem; border-top:1px solid rgba(var(--ink-rgb),.08); 
-    opacity:0; transform:translateY(30px); transition:opacity .7s, transform .7s, background .4s ease, border-color .4s ease;
+  .process-section { background: var(--mute); }
+  .process-steps { display: flex; justify-content: space-between; gap: 0; margin-top: 3.5rem; }
+
+  .process-step {
+    flex: 1; position: relative;
+    padding: 2.2rem 1.8rem 2rem;
+    border-top: 1px solid rgba(var(--ink-rgb),.08);
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .7s, transform .7s, background .4s ease;
+    overflow: hidden;
+    cursor: default;
   }
-  .process-step.visible{opacity:1;transform:translateY(0);}
-  .process-step:nth-child(2){transition-delay:.1s}.process-step:nth-child(3){transition-delay:.2s}.process-step:nth-child(4){transition-delay:.3s}
-  .process-step::before{content:'';position:absolute;top:-1px;left:0;width:0;height:2px;background:var(--accent);transition:width .8s cubic-bezier(.77,0,.175,1);}
-  .process-step.visible::before{width:100%;}
-  .process-step:hover { background: rgba(255,60,30,.03); border-top-color: var(--accent); }
+  .process-step + .process-step { border-left: 1px solid rgba(var(--ink-rgb),.06); }
+  .process-step.visible { opacity: 1; transform: translateY(0); }
+  .process-step:nth-child(2) { transition-delay:.12s }
+  .process-step:nth-child(3) { transition-delay:.24s }
+  .process-step:nth-child(4) { transition-delay:.36s }
 
-  .step-num{font-family:'Roboto Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:.2em;margin-bottom:1rem;}
-  .step-layout { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-  .process-step:hover .step-layout { transform: translateX(6px); }
+  /* Thanh accent chạy từ trái sang khi step visible */
+  .process-step::before {
+    content: ''; position: absolute; top: -1px; left: 0;
+    width: 0; height: 2px; background: var(--accent);
+    transition: width .9s cubic-bezier(.77,0,.175,1);
+  }
+  .process-step.visible::before { width: 100%; }
 
-  .step-info { display: flex; flex-direction: column; flex: 1; pointer-events: none;}
-  .step-icon{font-size:1.8rem;margin-bottom:0.5rem;display:block;}
-  .process-step h3{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:0;}
-  
+  /* Shimmer quét khi hover */
+  .process-step::after {
+    content: ''; position: absolute;
+    top: 0; left: -80%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,60,30,.05), transparent);
+    transition: left .6s ease;
+    pointer-events: none;
+  }
+  .process-step:hover { background: rgba(255,60,30,.025); }
+  .process-step:hover::after { left: 140%; }
+
+  .step-num {
+    font-family: 'Roboto Mono', monospace; font-size: .6rem;
+    color: var(--accent); letter-spacing: .25em; margin-bottom: 1.2rem;
+    transition: letter-spacing .4s ease, opacity .4s ease;
+  }
+  .process-step:hover .step-num { letter-spacing: .35em; opacity: .8; }
+
+  .step-layout {
+    display: flex; align-items: center;
+    justify-content: space-between; gap: .5rem;
+  }
+  .step-info { display: flex; flex-direction: column; flex: 1; pointer-events: none; }
+
+  /* Icon thay emoji — SVG wrapper */
+  .step-icon-wrap {
+    width: 38px; height: 38px;
+    border: 1px solid rgba(var(--ink-rgb),.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: .9rem; position: relative;
+    transition: border-color .35s ease, background .35s ease, box-shadow .35s ease, transform .4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .step-icon-wrap svg { width: 18px; height: 18px; stroke: rgba(var(--ink-rgb),.55); transition: stroke .3s ease, transform .4s cubic-bezier(0.34,1.56,0.64,1); }
+  .process-step:hover .step-icon-wrap {
+    border-color: var(--accent);
+    background: rgba(255,60,30,.06);
+    box-shadow: 0 0 14px rgba(255,60,30,.15);
+    transform: translateY(-3px);
+  }
+  .process-step:hover .step-icon-wrap svg { stroke: var(--accent); transform: scale(1.15); }
+
+  .process-step h3 {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; letter-spacing: .04em; margin: 0;
+    transition: letter-spacing .35s ease, color .3s ease;
+  }
+  .process-step:hover h3 { letter-spacing: .07em; color: var(--ink); }
+
   .process-anim-box {
-    height: 75px; display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: none; will-change: transform;
+    height: 80px; display: flex; align-items: center; justify-content: flex-end;
+    flex-shrink: 0; pointer-events: none; will-change: transform;
+    transition: transform .5s cubic-bezier(0.34,1.56,0.64,1), opacity .4s ease;
+    opacity: .5;
   }
-  .process-anim-box svg { height: 100%; width: 75px; overflow: visible; }
+  .process-anim-box svg { height: 100%; width: 80px; overflow: visible; }
   .sm-face { will-change: transform; }
-  .process-step:hover .process-anim-box { transform: scale(1.15) rotate(3deg); }
+  .process-step:hover .process-anim-box { transform: scale(1.12) translateY(-4px); opacity: .9; }
 
   /* SKILLS & SPOTLIGHT */
   .skills-section{background:var(--mute);}
@@ -587,19 +693,58 @@
   .skill-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .4s;z-index:2;}
   .skill-card:hover::after{width:100%;}
   
-  .skill-icon{width:42px;height:42px;border:1px solid rgba(255,60,30,.25);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;transition:border-color .3s,background .3s;}
-  .skill-icon svg { width: 22px; height: 22px; stroke: var(--ink); transition: filter 0.3s ease, transform 0.3s ease, stroke 0.3s ease;}
-  .skill-card:hover .skill-icon{border-color:var(--accent);background:rgba(255,60,30,.05);}
+  .skill-icon {
+    width: 48px; height: 48px;
+    border: 1px solid rgba(255,60,30,.2);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.2rem;
+    position: relative;
+    transition: border-color .4s ease, background .4s ease, box-shadow .4s ease;
+  }
+  /* Góc accent — 2 cạnh chạy vào khi hover */
+  .skill-icon::before,
+  .skill-icon::after {
+    content: '';
+    position: absolute;
+    width: 10px; height: 10px;
+    transition: width .35s ease, height .35s ease, opacity .35s ease;
+    opacity: 0;
+  }
+  .skill-icon::before {
+    top: -1px; left: -1px;
+    border-top: 1.5px solid var(--accent);
+    border-left: 1.5px solid var(--accent);
+  }
+  .skill-icon::after {
+    bottom: -1px; right: -1px;
+    border-bottom: 1.5px solid var(--accent);
+    border-right: 1.5px solid var(--accent);
+  }
+  .skill-card:hover .skill-icon::before,
+  .skill-card:hover .skill-icon::after {
+    width: 100%; height: 100%; opacity: 1;
+  }
+  .skill-icon svg {
+    width: 22px; height: 22px;
+    stroke: rgba(var(--ink-rgb), .65);
+    transition: stroke .35s ease, transform .4s cubic-bezier(0.34,1.56,0.64,1), opacity .3s ease;
+  }
+  .skill-card:hover .skill-icon {
+    border-color: transparent;
+    background: rgba(255,60,30,.06);
+    box-shadow: 0 0 18px rgba(255,60,30,.12), inset 0 0 12px rgba(255,60,30,.04);
+  }
   .skill-card:hover .skill-icon svg {
-    stroke: #fff; transform: scale(1.15);
-    filter: drop-shadow(-2px 0px 0px rgba(255, 60, 30, 0.9)) drop-shadow(2px 0px 0px rgba(0, 255, 255, 0.9));
+    stroke: var(--accent);
+    transform: scale(1.18) rotate(-4deg);
   }
 
   .skill-card h3{font-family:'Barlow Condensed',sans-serif;font-size:1.35rem;letter-spacing:.05em;margin-bottom:.55rem;}
   .skill-card p{font-size:.8rem;line-height:1.6;color:rgba(var(--ink-rgb),.42); min-height: 2.5rem;}
-  .skill-bar-wrap{margin-top:1.2rem;height:2px;background:rgba(var(--ink-rgb),.07);}
-  .skill-bar{height:100%;background:var(--accent);transform-origin:left;transform:scaleX(0);transition:transform 1.2s cubic-bezier(.77,0,.175,1);}
-  .skill-bar.active{transform:scaleX(1);}
+  .skill-bar-wrap{margin-top:1.2rem;height:2px;background:rgba(var(--ink-rgb),.07);overflow:hidden;}
+  .skill-bar{height:100%;background:var(--accent);width:0;}
+  .skill-bar.active{animation:skillGrow 1.2s cubic-bezier(.77,0,.175,1) forwards;}
+  @keyframes skillGrow{from{width:0}to{width:calc(var(--w)*100%);}}
 
   /* WORKS */
   .works-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem;}
@@ -885,7 +1030,7 @@
     </h1>
     <p class="hero-sub type-on-scroll">Tôi là Trần Hà Giang — 2D Character Animator chuyên tạo ra những nhân vật có hồn và chuyển động đầy cảm xúc. Mỗi frame là một câu chuyện tôi muốn kể.</p>
     <div class="hero-cta">
-      <a class="btn-primary magnetic" href="#works"><span>Xem Portfolio ↗</span></a>
+      <a class="btn-primary magnetic" href="#works"><span>Xem Portfolio <svg style="display:inline-block;vertical-align:middle;width:14px;height:14px;margin-left:2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span></a>
       <span class="scroll-hint">Cuộn xuống</span>
     </div>
   </div>
@@ -1066,28 +1211,49 @@
       <div class="step-num">01</div>
       <div class="step-layout">
         <div class="step-info">
-          <span class="step-icon">💡</span>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21h6M12 3a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 6H9c-1.5-1.5-3-3.5-3-6a6 6 0 0 1 6-6z"/>
+              <line x1="9" y1="17" x2="15" y2="17"/>
+            </svg>
+          </div>
           <h3>Ý tưởng</h3>
         </div>
         <div class="process-anim-box">
-          <svg viewBox="0 0 100 100" stroke="rgba(240,236,226,.55)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="50" cy="30" r="12" />
-            <g class="sm-face">
-              <circle cx="46" cy="28" r="1.5" fill="rgba(240,236,226,.6)" stroke="none"/>
-              <circle cx="54" cy="28" r="1.5" fill="rgba(240,236,226,.6)" stroke="none"/>
-              <path d="M47 33 Q50 35 53 33"/>
+          <svg viewBox="0 0 80 100" fill="none" stroke="rgba(240,236,226,.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Bóng đèn nảy -->
+            <g class="sm-accent" stroke="var(--accent)" stroke-width="1.5">
+              <circle cx="62" cy="16" r="6">
+                <animateTransform attributeName="transform" type="translate" values="0,0;0,-5;0,0" dur="2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
+              </circle>
+              <line x1="59" y1="22" x2="65" y2="22">
+                <animateTransform attributeName="transform" type="translate" values="0,0;0,-5;0,0" dur="2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
+              </line>
+              <line x1="60" y1="24.5" x2="64" y2="24.5">
+                <animateTransform attributeName="transform" type="translate" values="0,0;0,-5;0,0" dur="2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
+              </line>
+              <!-- tia sáng -->
+              <line x1="62" y1="7" x2="62" y2="4" opacity=".7"><animate attributeName="opacity" values=".7;0;.7" dur="2s" repeatCount="indefinite"/></line>
+              <line x1="69" y1="10" x2="71" y2="8" opacity=".7"><animate attributeName="opacity" values=".7;0;.7" dur="2s" begin=".15s" repeatCount="indefinite"/></line>
+              <line x1="55" y1="10" x2="53" y2="8" opacity=".7"><animate attributeName="opacity" values=".7;0;.7" dur="2s" begin=".3s" repeatCount="indefinite"/></line>
             </g>
-            <line x1="50" y1="42" x2="50" y2="75" />
-            <line x1="50" y1="50" x2="35" y2="65" />
-            <polyline points="50,50 65,45 55,30">
-               <animate attributeName="points" values="50,50 65,45 55,30; 50,50 65,50 60,35; 50,50 65,45 55,30" dur="2s" repeatCount="indefinite"/>
-            </polyline>
-            <line x1="50" y1="75" x2="35" y2="100" />
-            <line x1="50" y1="75" x2="65" y2="100" />
-            <circle cx="72" cy="15" r="4" fill="var(--accent)" stroke="none">
-              <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
-              <animate attributeName="cy" values="22;12;22" dur="2s" repeatCount="indefinite"/>
-            </circle>
+            <!-- Đầu -->
+            <circle cx="34" cy="28" r="10"/>
+            <!-- Mặt -->
+            <circle class="sm-eye" cx="30" cy="26" r="1.4" fill="rgba(240,236,226,.7)" stroke="none"/>
+            <circle class="sm-eye" cx="38" cy="26" r="1.4" fill="rgba(240,236,226,.7)" stroke="none"/>
+            <path class="sm-mouth" d="M30 32 Q34 35 38 32" stroke-width="1.4"/>
+            <!-- Thân -->
+            <line x1="34" y1="38" x2="34" y2="68"/>
+            <!-- Tay trái -->
+            <line x1="34" y1="48" x2="22" y2="60"/>
+            <!-- Tay phải chỉ lên bóng đèn -->
+            <line x1="34" y1="46" x2="52" y2="32">
+              <animateTransform attributeName="transform" type="rotate" values="0 34 46;-6 34 46;0 34 46" dur="2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
+            </line>
+            <!-- Chân -->
+            <line x1="34" y1="68" x2="24" y2="90"/>
+            <line x1="34" y1="68" x2="44" y2="90"/>
           </svg>
         </div>
       </div>
@@ -1097,25 +1263,48 @@
       <div class="step-num">02</div>
       <div class="step-layout">
         <div class="step-info">
-          <span class="step-icon">✏️</span>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <path d="M14 17.5h7M17.5 14v7"/>
+            </svg>
+          </div>
           <h3>Storyboard</h3>
         </div>
         <div class="process-anim-box">
-          <svg viewBox="0 0 100 100" stroke="rgba(240,236,226,.55)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="65" y="30" width="30" height="40" stroke="rgba(255,60,30,.4)" />
-            <circle cx="40" cy="30" r="10" />
-            <g class="sm-face">
-              <circle cx="38" cy="28" r="1.5" fill="rgba(240,236,226,.6)" stroke="none"/>
-              <circle cx="44" cy="28" r="1.5" fill="rgba(240,236,226,.6)" stroke="none"/>
-              <path d="M39 33 Q41 35 43 33"/>
-            </g>
-            <line x1="40" y1="40" x2="40" y2="75" />
-            <line x1="40" y1="75" x2="25" y2="100" />
-            <line x1="40" y1="75" x2="55" y2="100" />
-            <line x1="40" y1="50" x2="25" y2="60" />
-            <line x1="40" y1="50" x2="70" y2="45">
-              <animateTransform attributeName="transform" type="rotate" values="0 40 50; 18 40 50; 0 40 50; -12 40 50; 0 40 50" dur="1.5s" repeatCount="indefinite"/>
+          <svg viewBox="0 0 80 100" fill="none" stroke="rgba(240,236,226,.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Bảng vẽ -->
+            <rect x="44" y="18" width="30" height="38" rx="2" stroke="var(--accent)" stroke-width="1.4" class="sm-accent" opacity=".65"/>
+            <!-- Nét vẽ trên bảng — xuất hiện dần -->
+            <path d="M50 30 Q56 26 62 32 Q68 38 62 42" stroke="var(--accent)" stroke-width="1.2" class="sm-accent" opacity=".5">
+              <animate attributeName="stroke-dasharray" values="0 40;40 0;40 0" dur="2.2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;.5;.5;0" dur="2.2s" repeatCount="indefinite"/>
+            </path>
+            <!-- Chân bảng -->
+            <line x1="52" y1="56" x2="50" y2="62" stroke="var(--accent)" stroke-width="1.2" class="sm-accent" opacity=".5"/>
+            <line x1="66" y1="56" x2="68" y2="62" stroke="var(--accent)" stroke-width="1.2" class="sm-accent" opacity=".5"/>
+            <!-- Đầu -->
+            <circle cx="22" cy="22" r="10"/>
+            <circle class="sm-eye" cx="18" cy="20" r="1.4" fill="rgba(240,236,226,.7)" stroke="none"/>
+            <circle class="sm-eye" cx="26" cy="20" r="1.4" fill="rgba(240,236,226,.7)" stroke="none"/>
+            <path class="sm-mouth" d="M18 26 Q22 29 26 26" stroke-width="1.4"/>
+            <!-- Thân đứng thẳng, hơi nghiêng về bảng -->
+            <line x1="22" y1="32" x2="22" y2="65"/>
+            <!-- Tay trái buông tự nhiên -->
+            <line x1="22" y1="44" x2="12" y2="56"/>
+            <!-- Tay phải giơ lên cầm bút vẽ -->
+            <line x1="22" y1="42" x2="44" y2="28">
+              <animateTransform attributeName="transform" type="rotate" values="0 22 42;-6 22 42;0 22 42" dur="2.2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
             </line>
+            <!-- Bút vẽ đầu tay -->
+            <circle cx="44" cy="28" r="2" class="sm-accent" fill="var(--accent)" stroke="none">
+              <animateTransform attributeName="transform" type="rotate" values="0 22 42;-6 22 42;0 22 42" dur="2.2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
+            </circle>
+            <!-- Chân -->
+            <line x1="22" y1="65" x2="12" y2="88"/>
+            <line x1="22" y1="65" x2="32" y2="88"/>
           </svg>
         </div>
       </div>
@@ -1125,33 +1314,49 @@
       <div class="step-num">03</div>
       <div class="step-layout">
         <div class="step-info">
-          <span class="step-icon">🎬</span>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <polygon points="10,8.5 10,15.5 16,12" fill="currentColor" stroke="none" style="fill:rgba(var(--ink-rgb),.55)"/>
+            </svg>
+          </div>
           <h3>Animation</h3>
         </div>
         <div class="process-anim-box">
-          <svg viewBox="0 0 100 100" stroke="rgba(240,236,226,.55)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 80 100" fill="none" stroke="rgba(240,236,226,.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <g>
-              <animateTransform attributeName="transform" type="translate" values="0 0; 0 -5; 0 0" dur="0.6s" repeatCount="indefinite"/>
-              <circle cx="50" cy="30" r="10" />
-              <g class="sm-face">
-                <circle cx="46" cy="28" r="1.5" fill="rgba(240,236,226,.6)" stroke="none"/>
-                <circle cx="54" cy="28" r="1.5" fill="rgba(240,236,226,.6)" stroke="none"/>
-                <path d="M47 33 Q50 36 53 33"/>
-              </g>
-              <line x1="50" y1="40" x2="50" y2="70" />
-              <line x1="50" y1="45" x2="30" y2="45">
-                <animateTransform attributeName="transform" type="rotate" values="30 50 45; -50 50 45; 30 50 45" dur="0.6s" repeatCount="indefinite"/>
+              <animateTransform attributeName="transform" type="translate" values="0,0;0,-6;0,0" dur="0.65s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
+              <!-- Đầu -->
+              <circle cx="40" cy="22" r="10"/>
+              <!-- Mắt ^^ -->
+              <path class="sm-mouth" d="M34 19 Q36 17 38 19" stroke-width="1.4" fill="none"/>
+              <path class="sm-mouth" d="M42 19 Q44 17 46 19" stroke-width="1.4" fill="none"/>
+              <path class="sm-mouth" d="M34 27 Q40 32 46 27" stroke-width="1.5"/>
+              <!-- Thân -->
+              <line x1="40" y1="32" x2="40" y2="62"/>
+              <!-- Tay trái vung lên -->
+              <line x1="40" y1="42" x2="24" y2="30">
+                <animateTransform attributeName="transform" type="rotate" values="0 40 42;-18 40 42;0 40 42" dur="0.65s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
               </line>
-              <line x1="50" y1="45" x2="70" y2="45">
-                <animateTransform attributeName="transform" type="rotate" values="-50 50 45; 30 50 45; -50 50 45" dur="0.6s" repeatCount="indefinite"/>
+              <!-- Tay phải vung lên ngược pha -->
+              <line x1="40" y1="42" x2="56" y2="30">
+                <animateTransform attributeName="transform" type="rotate" values="0 40 42;18 40 42;0 40 42" dur="0.65s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
               </line>
-              <line x1="50" y1="70" x2="40" y2="95">
-                <animateTransform attributeName="transform" type="rotate" values="-35 50 70; 35 50 70; -35 50 70" dur="0.6s" repeatCount="indefinite"/>
+              <!-- Chân -->
+              <line x1="40" y1="62" x2="28" y2="84">
+                <animateTransform attributeName="transform" type="rotate" values="0 40 62;12 40 62;0 40 62" dur="0.65s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
               </line>
-              <line x1="50" y1="70" x2="60" y2="95">
-                <animateTransform attributeName="transform" type="rotate" values="35 50 70; -35 50 70; 35 50 70" dur="0.6s" repeatCount="indefinite"/>
+              <line x1="40" y1="62" x2="52" y2="84">
+                <animateTransform attributeName="transform" type="rotate" values="0 40 62;-12 40 62;0 40 62" dur="0.65s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
               </line>
             </g>
+            <!-- Nhấn accent hai bên -->
+            <circle class="sm-accent" cx="14" cy="20" r="2" fill="var(--accent)" stroke="none">
+              <animate attributeName="opacity" values="0;1;0" dur="0.65s" repeatCount="indefinite"/>
+            </circle>
+            <circle class="sm-accent" cx="66" cy="20" r="2" fill="var(--accent)" stroke="none">
+              <animate attributeName="opacity" values="0;1;0" dur="0.65s" begin="0.33s" repeatCount="indefinite"/>
+            </circle>
           </svg>
         </div>
       </div>
@@ -1161,32 +1366,42 @@
       <div class="step-num">04</div>
       <div class="step-layout">
         <div class="step-info">
-          <span class="step-icon">✨</span>
+          <div class="step-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+            </svg>
+          </div>
           <h3>Hoàn thiện</h3>
         </div>
         <div class="process-anim-box">
-          <svg viewBox="0 0 100 100" stroke="rgba(240,236,226,.55)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="50" cy="30" r="10" />
-            <g class="sm-face">
-              <circle cx="45" cy="27" r="1.5" fill="rgba(240,236,226,.6)" stroke="none"/>
-              <circle cx="55" cy="27" r="1.5" fill="rgba(240,236,226,.6)" stroke="none"/>
-              <path d="M45 32 Q50 38 55 32"/>
+          <svg viewBox="0 0 80 100" fill="none" stroke="rgba(240,236,226,.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Stars bắn lần lượt -->
+            <g class="sm-accent" stroke="var(--accent)" stroke-width="1.4">
+              <line x1="14" y1="18" x2="14" y2="12"><animate attributeName="opacity" values="0;1;0" dur="2s" begin="0s" repeatCount="indefinite"/></line>
+              <line x1="11" y1="15" x2="17" y2="15"><animate attributeName="opacity" values="0;1;0" dur="2s" begin="0s" repeatCount="indefinite"/></line>
+              <line x1="66" y1="14" x2="66" y2="9"><animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.7s" repeatCount="indefinite"/></line>
+              <line x1="63" y1="11.5" x2="69" y2="11.5"><animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.7s" repeatCount="indefinite"/></line>
+              <line x1="72" y1="28" x2="72" y2="23"><animate attributeName="opacity" values="0;1;0" dur="2s" begin="1.4s" repeatCount="indefinite"/></line>
+              <line x1="69" y1="25.5" x2="75" y2="25.5"><animate attributeName="opacity" values="0;1;0" dur="2s" begin="1.4s" repeatCount="indefinite"/></line>
             </g>
-            <line x1="50" y1="40" x2="50" y2="75" />
-            <line x1="50" y1="75" x2="35" y2="100" />
-            <line x1="50" y1="75" x2="65" y2="100" />
-            <line x1="50" y1="50" x2="25" y2="25">
-               <animateTransform attributeName="transform" type="rotate" values="0 50 50; -15 50 50; 0 50 50" dur="2s" repeatCount="indefinite"/>
+            <!-- Đầu -->
+            <circle cx="40" cy="24" r="10"/>
+            <!-- Mặt cười lớn -->
+            <circle class="sm-eye" cx="36" cy="22" r="1.4" fill="rgba(240,236,226,.7)" stroke="none"/>
+            <circle class="sm-eye" cx="44" cy="22" r="1.4" fill="rgba(240,236,226,.7)" stroke="none"/>
+            <path class="sm-mouth" d="M34 28 Q40 34 46 28" stroke-width="1.6"/>
+            <!-- Thân -->
+            <line x1="40" y1="34" x2="40" y2="66"/>
+            <!-- Tay ăn mừng -->
+            <line x1="40" y1="44" x2="22" y2="28">
+              <animateTransform attributeName="transform" type="rotate" values="0 40 44;-10 40 44;0 40 44" dur="2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
             </line>
-            <line x1="50" y1="50" x2="75" y2="25">
-               <animateTransform attributeName="transform" type="rotate" values="0 50 50; 15 50 50; 0 50 50" dur="2s" repeatCount="indefinite"/>
+            <line x1="40" y1="44" x2="58" y2="28">
+              <animateTransform attributeName="transform" type="rotate" values="0 40 44;10 40 44;0 40 44" dur="2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .2 1;.4 0 .2 1"/>
             </line>
-            <g stroke="var(--accent)" stroke-width="2">
-              <line x1="75" y1="15" x2="75" y2="5"><animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/></line>
-              <line x1="70" y1="10" x2="80" y2="10"><animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/></line>
-              <line x1="25" y1="15" x2="25" y2="5"><animate attributeName="opacity" values="0;1;0" dur="1.5s" delay="0.5s" repeatCount="indefinite"/></line>
-              <line x1="20" y1="10" x2="30" y2="10"><animate attributeName="opacity" values="0;1;0" dur="1.5s" delay="0.5s" repeatCount="indefinite"/></line>
-            </g>
+            <!-- Chân vững -->
+            <line x1="40" y1="66" x2="30" y2="90"/>
+            <line x1="40" y1="66" x2="50" y2="90"/>
           </svg>
         </div>
       </div>
@@ -1323,7 +1538,7 @@
         </svg>
       </div>
       <div class="work-overlay"><div class="work-tag">Character Animation · 2024</div><div class="work-title">The Last Signal — Short Film</div></div>
-      <div class="work-arrow">↗</div>
+      <div class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
     </div>
     <div class="work-card tilt">
       <div class="work-bg work-bg-2">
@@ -1334,7 +1549,7 @@
         </svg>
       </div>
       <div class="work-overlay"><div class="work-tag">Motion Graphics · 2024</div><div class="work-title">Nexus Brand Identity</div></div>
-      <div class="work-arrow">↗</div>
+      <div class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
     </div>
     <div class="work-card tilt">
       <div class="work-bg work-bg-3">
@@ -1345,7 +1560,7 @@
         </svg>
       </div>
       <div class="work-overlay"><div class="work-tag">Logo Animation · 2024</div><div class="work-title">Bloom — Brand Reveal</div></div>
-      <div class="work-arrow">↗</div>
+      <div class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
     </div>
   </div>
 </section>
@@ -1742,8 +1957,11 @@ const pObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersec
 document.querySelectorAll('.process-step').forEach(el=>pObs.observe(el));
 
 const bObs=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(e.isIntersecting){const w=parseFloat(e.target.style.getPropertyValue('--w'));setTimeout(()=>{e.target.style.width=(w*100)+'%';e.target.classList.add('active');},200);}
-}),{threshold:.5});
+  if(e.isIntersecting && !e.target.classList.contains('active')){
+    setTimeout(()=>{ e.target.classList.add('active'); }, 150);
+    bObs.unobserve(e.target);
+  }
+}),{threshold:0, rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.skill-bar').forEach(b=>bObs.observe(b));
 
 // TYPING EFFECT (TERMINAL Ở HERO LABEL)
@@ -1853,12 +2071,16 @@ if(!isMobile) {
   document.querySelectorAll('.process-step').forEach(step => {
     const animBox = step.querySelector('.process-anim-box');
     step.addEventListener('mousemove', e => {
-      const r = step.getBoundingClientRect(); const x = (e.clientX - r.left - r.width / 2) / (r.width / 2); const y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
-      animBox.style.transition = 'transform 0.1s linear';
-      animBox.style.transform = `scale(1.15) translate(${x * 8}px, ${y * 8}px) rotate(${x * 6}deg)`;
+      const r = step.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+      animBox.style.transition = 'transform 0.15s ease, opacity 0.4s ease';
+      animBox.style.transform = `scale(1.12) translateY(-4px) translateX(${x * 5}px)`;
+      animBox.style.opacity = '0.9';
     });
     step.addEventListener('mouseleave', () => {
-      animBox.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'; animBox.style.transform = '';
+      animBox.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease';
+      animBox.style.transform = '';
+      animBox.style.opacity = '';
     });
   });
 
