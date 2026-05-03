@@ -192,6 +192,48 @@
   .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
   .about-visual{position:relative;aspect-ratio:3/4;background:var(--mute);overflow:hidden;}
   .about-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent) 0%,transparent 60%);opacity:.12;pointer-events:none;}
+  .about-lines{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-around;padding:2rem;z-index:1;}
+  .aline{height:1px;background:linear-gradient(90deg,transparent,var(--ink),transparent);animation:lineGrow 3s ease-in-out infinite alternate;opacity:.07;}
+  .aline:nth-child(2){animation-delay:.4s}.aline:nth-child(3){animation-delay:.8s}.aline:nth-child(4){animation-delay:1.2s}.aline:nth-child(5){animation-delay:1.6s}
+  @keyframes lineGrow{from{transform:scaleX(.15);opacity:.03;}to{transform:scaleX(1);opacity:.12;}}
+  
+  /* CHỮ TRAN HA GIANG Ở NỀN */
+  .about-big-text {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(4rem, 10vw, 7rem);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(240, 236, 226, 0.12);
+    pointer-events: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 3;
+  }
+
+  /* NÚT HOLD TO DELETE DÀNH CHO MÁY TÍNH */
+  #hold-btn-container {
+    position: absolute;
+    bottom: 3.5rem; /* Vị trí hoàn hảo lơ lửng dưới gót chân */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+  
+  #hold-lottie {
+    width: 280px; /* Đã cho to bành trướng */
+    height: 100px;
+    pointer-events: none;
+  }
+  
   .about-text p{font-size:1rem;line-height:1.85;color:rgba(240,236,226,.6);margin-bottom:1.2rem; min-height: 3rem;}
   .stats{display:flex;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap;}
   .spec-item{padding:.8rem 1.2rem;border-left:2px solid var(--accent);transition:background .2s;}
@@ -296,7 +338,7 @@
   .reveal{opacity:0;transform:translateY(40px);transition:opacity .85s,transform .85s;}
   .reveal.visible{opacity:1;transform:translateY(0);}
 
-  /* TỐI ƯU MOBILE CHỐNG GIẬT LAG */
+  /* TỐI ƯU MOBILE CHỐNG GIẬT LAG & RESPONSIVE NÚT HOLD TO DELETE */
   @media(max-width:768px){
     body{cursor:auto;}
     .cursor,.cursor-ring{display:none !important;} 
@@ -324,7 +366,21 @@
     section{padding:4rem 1.5rem;}
     .about-inner{grid-template-columns:1fr;gap:2.5rem;}
     .about-visual{aspect-ratio:4/3;}
-    .about-big-text{font-size:8vw; position:absolute; bottom:1.5rem; left:1.5rem; font-family:'Barlow Condensed',sans-serif; color:transparent; -webkit-text-stroke:1px rgba(240,236,226,.07); pointer-events:none; z-index:3;}
+    .about-big-text{font-size:11vw; position:absolute; bottom:1rem; left:1rem; font-family:'Barlow Condensed',sans-serif; color:transparent; -webkit-text-stroke:1px rgba(240,236,226,.07); pointer-events:none; z-index:3;}
+    
+    /* VỊ TRÍ ĐIỆN THOẠI: Ném nút lên góc trên cùng bên phải */
+    #hold-btn-container {
+      bottom: auto;
+      top: 1rem;
+      left: auto;
+      right: 1rem;
+      transform: none;
+    }
+    #hold-lottie {
+      width: 150px;
+      height: 50px;
+    }
+
     .stats{flex-direction:column;gap:1rem;}
     
     .skills-grid{grid-template-columns:1fr;}
@@ -340,7 +396,6 @@
     .contact-email{font-size:clamp(1.5rem,7vw,2.5rem);}
     .contact-big{font-size:clamp(2.5rem,18vw,5rem);}
     
-    /* CHỈNH LẠI FAB CONTAINER Ở MOBILE */
     .fab-container { bottom: 2.5rem; right: 1.5rem; gap: 0.8rem; }
     .btn-back-to-top { width: 40px; height: 40px; }
     .btn-messenger { width: 55px; height: 55px; }
@@ -358,7 +413,6 @@
     .skill-card h3{font-size:1.05rem;}
     .work-title{font-size:1.25rem;}
     .process-steps{flex-direction: column;}
-    .about-big-text{font-size:9.5vw;}
     .marquee-inner span{font-size:.82rem;padding:0 1.4rem;}
   }
 </style>
@@ -368,14 +422,12 @@
 
 <!-- NÚT LÊN ĐẦU TRANG & MESSENGER EXPANDABLE -->
 <div class="fab-container">
-  <!-- Back to Top -->
   <div class="btn-back-to-top" id="backToTop" title="Lên đầu trang">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 19V5M5 12l7-7 7 7"/>
     </svg>
   </div>
   
-  <!-- Sub Menu (Zalo, Msg, SMS, Telegram) -->
   <div class="fab-menu" id="fabMenu">
     <a href="https://zalo.me/0988770134" target="_blank" class="fab-item" style="background:#0068FF;" title="Zalo">
       <span style="font-weight:900; font-size:1.1rem; font-family:sans-serif;">Z</span>
@@ -397,7 +449,6 @@
     </a>
   </div>
 
-  <!-- Main Toggle Button -->
   <div class="btn-messenger" id="fabMain" title="Liên hệ">
     <svg class="icon-chat" viewBox="0 0 24 24" fill="currentColor">
       <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
@@ -577,33 +628,32 @@
       <!-- WRAPPER CHỨA NHÂN VẬT VÀ NGƯỜI QUE -->
       <div id="character-wrapper" style="position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;pointer-events:none;">
 
-        <!-- NGƯỜI QUE (Ẩn mặc định, sẽ hiện ra khi bị xóa) -->
+        <!-- NGƯỜI QUE -->
         <svg id="character-stickman" style="position:absolute; width: 50%; height: 50%; opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease; transform: scale(0.9);" viewBox="0 0 100 100" stroke="rgba(240,236,226,.8)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-           <circle cx="50" cy="25" r="10" /> <!-- Đầu -->
-           <line x1="50" y1="35" x2="50" y2="65" /> <!-- Thân -->
-           <line x1="50" y1="45" x2="35" y2="55" /> <!-- Tay trái -->
-           <line x1="50" y1="45" x2="65" y2="55" /> <!-- Tay phải -->
-           <line x1="50" y1="65" x2="38" y2="90" /> <!-- Chân trái -->
-           <line x1="50" y1="65" x2="62" y2="90" /> <!-- Chân phải -->
-           <circle cx="46" cy="23" r="1" fill="rgba(240,236,226,.8)" stroke="none"/> <!-- Mắt -->
+           <circle cx="50" cy="25" r="10" />
+           <line x1="50" y1="35" x2="50" y2="65" />
+           <line x1="50" y1="45" x2="35" y2="55" />
+           <line x1="50" y1="45" x2="65" y2="55" />
+           <line x1="50" y1="65" x2="38" y2="90" />
+           <line x1="50" y1="65" x2="62" y2="90" />
+           <circle cx="46" cy="23" r="1" fill="rgba(240,236,226,.8)" stroke="none"/>
            <circle cx="54" cy="23" r="1" fill="rgba(240,236,226,.8)" stroke="none"/>
-           <path d="M47 28 Q50 26 53 28" stroke-width="2"/> <!-- Miệng buồn -->
+           <path d="M47 28 Q50 26 53 28" stroke-width="2"/>
         </svg>
 
         <!-- ẢNH GIF GỐC -->
         <img id="character-gif" src="character-walk.gif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain; transition: all 0.4s ease;" alt="Character Walk">
       </div>
 
-      <div class="about-big-text" style="z-index:3;">TRAN HA GIANG</div>
+      <div class="about-big-text">TRAN HA GIANG</div>
 
-      <!-- NÚT HOLD TO DELETE ĐÃ ĐƯỢC CHỈNH LÊN VỊ TRÍ AN TOÀN -->
-      <div id="hold-btn-container" style="position:absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index:10; display:flex; flex-direction:column; align-items:center; cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;" oncontextmenu="return false;">
+      <!-- NÚT HOLD TO DELETE -->
+      <div id="hold-btn-container">
         <lottie-player
           id="hold-lottie"
           src="hold-to-delete.json"
           background="transparent"
-          speed="1"
-          style="width: 200px; height: 75px; pointer-events: none;">
+          speed="1">
         </lottie-player>
       </div>
     </div>
@@ -631,7 +681,6 @@
   </div>
   <div class="process-steps">
     
-    <!-- Step 1 -->
     <div class="process-step">
       <div class="step-num">01</div>
       <div class="step-layout">
@@ -663,7 +712,6 @@
       </div>
     </div>
 
-    <!-- Step 2 -->
     <div class="process-step">
       <div class="step-num">02</div>
       <div class="step-layout">
@@ -692,7 +740,6 @@
       </div>
     </div>
 
-    <!-- Step 3 -->
     <div class="process-step">
       <div class="step-num">03</div>
       <div class="step-layout">
@@ -729,7 +776,6 @@
       </div>
     </div>
 
-    <!-- Step 4 -->
     <div class="process-step">
       <div class="step-num">04</div>
       <div class="step-layout">
@@ -941,7 +987,7 @@
 
 <footer>
   <p>© 2026 Trần Hà Giang</p>
-  <p style="font-family:'Roboto Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,236,226,.18);">DESIGNED & ANIMATED BY <span style="color:var(--accent);">TRẦNHÀGIANG</span></p>
+  <p style="font-family:'Roboto Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,236,226,.18);">DESIGNED & ANIMATED BY <span style="color:var(--accent);">TRAN HA GIANG</span></p>
 </footer>
 
 <!-- THÊM LOTTIE PLAYER CHUẨN XÁC NẰM NGOÀI CÙNG -->
