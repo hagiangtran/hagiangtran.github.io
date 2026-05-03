@@ -275,6 +275,8 @@
     position: fixed; bottom: 3.5rem; right: 3rem; 
     display: flex; flex-direction: column; align-items: center;
     z-index: 9000;
+    /* Cần để fab-menu absolute định vị đúng */
+    isolation: isolate;
   }
   
   .btn-back-to-top {
@@ -292,7 +294,7 @@
 
   .fab-menu {
     display: flex; flex-direction: column; gap: 0.8rem;
-    position: absolute; bottom: 75px;
+    position: absolute; bottom: calc(60px + 12px);
     pointer-events: none;
   }
   .fab-menu.open { pointer-events: auto; }
@@ -706,7 +708,7 @@
     .fab-container { bottom: 2.5rem; right: 1.5rem; gap: 0.8rem; }
     .btn-back-to-top { width: 40px; height: 40px; }
     .btn-messenger { width: 55px; height: 55px; }
-    .fab-menu { bottom: 68px; }
+    .fab-menu { bottom: calc(55px + 12px); }
 
     .contact-social{flex-direction:column;align-items:center;gap:1rem;}
     .contact-social .soc-link{width:100%;max-width:240px;box-sizing:border-box;}
@@ -1656,13 +1658,23 @@ fabMain.addEventListener('click', (e) => {
   e.stopPropagation();
   fabMain.classList.toggle('open');
   fabMenu.classList.toggle('open');
-  fabMain.setAttribute('aria-expanded', fabMenu.classList.contains('open'));
+  const isOpen = fabMenu.classList.contains('open');
+  fabMain.setAttribute('aria-expanded', isOpen);
+  // Ẩn nút back-to-top khi mở menu, hiện lại khi đóng
+  if (isOpen) {
+    backToTop.classList.remove('visible');
+  } else {
+    if (window.scrollY > 500) backToTop.classList.add('visible');
+  }
 });
 
 document.addEventListener('click', (e) => {
   if (!fabMain.contains(e.target) && !fabMenu.contains(e.target)) {
     fabMain.classList.remove('open');
     fabMenu.classList.remove('open');
+    fabMain.setAttribute('aria-expanded', 'false');
+    // Hiện lại nút back-to-top nếu đã cuộn đủ
+    if (window.scrollY > 500) backToTop.classList.add('visible');
   }
 });
 
