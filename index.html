@@ -1545,6 +1545,21 @@ function splatLoop(){
 // KIỂM TRA THIẾT BỊ DI ĐỘNG ĐỂ TỐI ƯU
 const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
 
+// TẮT BACKDROP-FILTER TRÊN MOBILE (RẤT NẶNG)
+if(isMobile) {
+  const style = document.createElement('style');
+  style.textContent = `
+    nav.scrolled { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+    body.light nav.scrolled { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+    .btn-back-to-top { backdrop-filter: none !important; }
+    @keyframes gridMove { from{background-position:0 0;} to{background-position:0 0;} }
+    @keyframes orbFloat { from{transform:none;} to{transform:none;} }
+    .orb { animation: none !important; filter: blur(60px) !important; }
+    .marquee-inner { animation-duration: 60s !important; }
+  `;
+  document.head.appendChild(style);
+}
+
 // LOADER
 const loader=document.getElementById('loader');
 const loaderBar=document.getElementById('loaderBar');
@@ -1559,10 +1574,6 @@ const lt=setInterval(()=>{
 
 // NÚT LÊN ĐẦU TRANG & CUỘN MƯỢT
 const backToTop = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 500) { backToTop.classList.add('visible'); } 
-  else { backToTop.classList.remove('visible'); }
-});
 backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 backToTop.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } });
 
@@ -1584,12 +1595,35 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// SCROLL PROGRESS
+// GỘP TẤT CẢ SCROLL LISTENERS VÀO 1 (TRÁNH LAG)
 const prog=document.getElementById('progress');
-window.addEventListener('scroll',()=>{
-  const p=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
-  prog.style.width=p+'%';
-});
+const nav=document.getElementById('nav');
+const navLinks = document.querySelectorAll('nav ul a');
+const sections = document.querySelectorAll('section[id]');
+let scrollTicking = false;
+window.addEventListener('scroll', () => {
+  if(!scrollTicking) {
+    requestAnimationFrame(() => {
+      const sy = window.scrollY;
+      // scroll progress
+      const p = sy / (document.body.scrollHeight - window.innerHeight) * 100;
+      prog.style.width = p + '%';
+      // nav scrolled
+      nav.classList.toggle('scrolled', sy > 60);
+      // back to top
+      backToTop.classList.toggle('visible', sy > 500);
+      // active nav link
+      let cur='';
+      sections.forEach(s=>{if(sy>=s.offsetTop-200)cur=s.id;});
+      navLinks.forEach(a=>{
+        a.classList.toggle('active', a.getAttribute('href')==='#'+cur);
+        a.style.opacity='';
+      });
+      scrollTicking = false;
+    });
+    scrollTicking = true;
+  }
+}, {passive: true});
 
 // CURSOR
 const cursor=document.getElementById('cursor');
@@ -1600,12 +1634,9 @@ if(!isMobile) {
 }
 
 // NAV & MOBILE MENU
-const nav=document.getElementById('nav');
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const navUl = document.querySelector('nav ul');
-const navLinks = document.querySelectorAll('nav ul a');
 
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60));
 mobileMenuBtn.addEventListener('click', () => {
   mobileMenuBtn.classList.toggle('open');
   navUl.classList.toggle('open');
@@ -1645,39 +1676,40 @@ setTimeout(()=>{
   },55);
 },800);
 
-// HỆ THỐNG GÕ CHỮ KHI CUỘN ĐÃ TỐI ƯU CẢ MOBILE
+// HỆ THỐNG GÕ CHỮ KHI CUỘN - TẮT TRÊN MOBILE ĐỂ TRÁNH LAG
 const typeElements = document.querySelectorAll('.type-on-scroll');
-typeElements.forEach(el => {
-  el.setAttribute('data-original-text', el.innerText.trim());
-  el.innerText = ''; 
-});
-
-const typeObs = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      if (!el.classList.contains('typing-done')) {
-        el.classList.add('typing'); 
-        const text = el.getAttribute('data-original-text');
-        let charIndex = 0;
-        
-        const typingSpeed = isMobile ? 8 : 15; 
-        
-        const typeInterval = setInterval(() => {
-          el.innerText = text.substring(0, charIndex + 1);
-          charIndex++;
-          if (charIndex >= text.length) {
-            clearInterval(typeInterval);
-            el.classList.remove('typing');
-            el.classList.add('typing-done');
-          }
-        }, typingSpeed);
-        observer.unobserve(el); 
-      }
-    }
+if(isMobile) {
+  // Mobile: hiện text ngay, không gõ từng chữ
+  typeElements.forEach(el => el.classList.add('typing-done'));
+} else {
+  typeElements.forEach(el => {
+    el.setAttribute('data-original-text', el.innerText.trim());
+    el.innerText = '';
   });
-}, { threshold: 0.2 }); 
-typeElements.forEach(el => typeObs.observe(el));
+  const typeObs = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        if (!el.classList.contains('typing-done')) {
+          el.classList.add('typing');
+          const text = el.getAttribute('data-original-text');
+          let charIndex = 0;
+          const typeInterval = setInterval(() => {
+            el.innerText = text.substring(0, charIndex + 1);
+            charIndex++;
+            if (charIndex >= text.length) {
+              clearInterval(typeInterval);
+              el.classList.remove('typing');
+              el.classList.add('typing-done');
+            }
+          }, 15);
+          observer.unobserve(el);
+        }
+      }
+    });
+  }, { threshold: 0.2 });
+  typeElements.forEach(el => typeObs.observe(el));
+}
 
 // CHỈ CHẠY CÁC HIỆU ỨNG TƯƠNG TÁC CHUỘT NẶNG NẾU LÀ MÁY TÍNH
 if(!isMobile) {
@@ -1814,16 +1846,6 @@ function applyTheme(light) {
   btn.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();applyTheme(!isLight);}});
 });
 
-
-const sections=document.querySelectorAll('section[id]');
-window.addEventListener('scroll',()=>{
-  let cur='';
-  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
-  navLinks.forEach(a=>{
-    a.classList.toggle('active', a.getAttribute('href')==='#'+cur);
-    a.style.opacity = '';
-  });
-});
 
 // ==========================================
 // HIỆU ỨNG HOLD TO DELETE NHÂN VẬT
