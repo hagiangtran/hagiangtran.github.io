@@ -111,7 +111,6 @@
     background: linear-gradient(135deg, #0d1b3e 0%, #1a1040 100%);
     border: 1.5px solid rgba(255,255,255,.1);
     position: relative;
-    overflow: hidden;
     transition: background .6s ease, border-color .5s ease;
     pointer-events: none;
   }
@@ -196,14 +195,19 @@
 
   /* SUN RAYS */
   .toggle-rays {
-    position: absolute; inset: -7px; border-radius: 50%;
+    position: absolute;
+    width: 36px; height: 36px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
     opacity: 0; transition: opacity .3s ease .25s; pointer-events: none;
   }
-  body.light .toggle-rays { opacity: 1; }
+  body.light .toggle-rays { opacity: 0; }
   .toggle-ray {
-    position: absolute; width: 3px; height: 5px;
+    position: absolute; width: 3px; height: 6px;
     background: #FFD93D; border-radius: 999px;
-    left: 50%; top: 50%; transform-origin: 50% 200%;
+    left: 50%; top: 50%;
+    transform-origin: 50% 0%;
   }
 
   /* LOADER */
@@ -746,14 +750,14 @@
       <div class="toggle-cloud"><div class="toggle-cloud-body"></div></div>
       <div class="toggle-knob">
         <div class="toggle-rays">
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(0deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(45deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(90deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(135deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(180deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(225deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(270deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(315deg) translateY(-100%) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(0deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(45deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(90deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(135deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(180deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(225deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(270deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(315deg) translateY(-16px) translateX(-50%)"></div>
         </div>
       </div>
     </div>
@@ -781,14 +785,14 @@
       <div class="toggle-cloud"><div class="toggle-cloud-body"></div></div>
       <div class="toggle-knob">
         <div class="toggle-rays">
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(0deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(45deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(90deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(135deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(180deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(225deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(270deg) translateY(-100%) translateX(-50%)"></div>
-          <div class="toggle-ray" style="transform:translateX(-50%) translateY(-50%) rotate(315deg) translateY(-100%) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(0deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(45deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(90deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(135deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(180deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(225deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(270deg) translateY(-16px) translateX(-50%)"></div>
+          <div class="toggle-ray" style="transform:rotate(315deg) translateY(-16px) translateX(-50%)"></div>
         </div>
       </div>
     </div>
