@@ -26,8 +26,15 @@
   body:has(a:hover) .cursor, body:has(button:hover) .cursor{width:18px;height:18px;background:var(--ink);}
   body:has(a:hover) .cursor-ring, body:has(button:hover) .cursor-ring{width:54px;height:54px;border-color:var(--accent);}
 
-  /* NOISE OVERLAY */
-  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:1000;}
+  /* TÙY CHỈNH THANH CUỘN (SCROLLBAR) */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(240, 236, 226, 0.2); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  /* TÙY CHỈNH MÀU KHI BÔI ĐEN CHỮ (SELECTION) */
+  ::selection { background: var(--accent); color: #fff; }
+  ::-moz-selection { background: var(--accent); color: #fff; }
 
   /* SCROLL PROGRESS */
   #progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:9997;width:0;pointer-events:none;transition:width .08s;}
@@ -57,7 +64,7 @@
      FLOATING ACTION BUTTONS (MESSENGER MENU) 
      ========================================= */
   .fab-container {
-    position: fixed; bottom: 3.5rem; right: 3rem; /* Đã đẩy lên cao hơn */
+    position: fixed; bottom: 3.5rem; right: 3rem; 
     display: flex; flex-direction: column; align-items: center;
     z-index: 9000;
   }
@@ -75,7 +82,6 @@
   .btn-back-to-top:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: translateY(-4px); }
   .btn-back-to-top svg { width: 20px; height: 20px; }
 
-  /* Nút Menu Nhỏ xòe ra */
   .fab-menu {
     display: flex; flex-direction: column; gap: 0.8rem;
     position: absolute; bottom: 75px; 
@@ -94,7 +100,6 @@
   .fab-item:hover { transform: scale(1.15); filter: brightness(1.1); }
   .fab-item svg { width: 22px; height: 22px; }
 
-  /* Nút Tròn Bật/Tắt Chính */
   .btn-messenger {
     width: 60px; height: 60px; border-radius: 50%;
     background: var(--accent); color: #fff;
@@ -187,11 +192,6 @@
   .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
   .about-visual{position:relative;aspect-ratio:3/4;background:var(--mute);overflow:hidden;}
   .about-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent) 0%,transparent 60%);opacity:.12;pointer-events:none;}
-  .about-lines{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-around;padding:2rem;z-index:1;}
-  .aline{height:1px;background:linear-gradient(90deg,transparent,var(--ink),transparent);animation:lineGrow 3s ease-in-out infinite alternate;opacity:.07;}
-  .aline:nth-child(2){animation-delay:.4s}.aline:nth-child(3){animation-delay:.8s}.aline:nth-child(4){animation-delay:1.2s}.aline:nth-child(5){animation-delay:1.6s}
-  @keyframes lineGrow{from{transform:scaleX(.15);opacity:.03;}to{transform:scaleX(1);opacity:.12;}}
-  .about-big-text{position:absolute;bottom:1.5rem;left:1.5rem;font-family:'Barlow Condensed',sans-serif;font-size:3rem;color:transparent;-webkit-text-stroke:1px rgba(240,236,226,.07);pointer-events:none;text-transform:uppercase;white-space:nowrap;z-index:3;}
   .about-text p{font-size:1rem;line-height:1.85;color:rgba(240,236,226,.6);margin-bottom:1.2rem; min-height: 3rem;}
   .stats{display:flex;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap;}
   .spec-item{padding:.8rem 1.2rem;border-left:2px solid var(--accent);transition:background .2s;}
@@ -324,7 +324,7 @@
     section{padding:4rem 1.5rem;}
     .about-inner{grid-template-columns:1fr;gap:2.5rem;}
     .about-visual{aspect-ratio:4/3;}
-    .about-big-text{font-size:8vw;}
+    .about-big-text{font-size:8vw; position:absolute; bottom:1.5rem; left:1.5rem; font-family:'Barlow Condensed',sans-serif; color:transparent; -webkit-text-stroke:1px rgba(240,236,226,.07); pointer-events:none; z-index:3;}
     .stats{flex-direction:column;gap:1rem;}
     
     .skills-grid{grid-template-columns:1fr;}
@@ -521,7 +521,7 @@
   </div>
 </section>
 
-<!-- MARQUEE -->
+<!-- MARQUEE BAND -->
 <div class="marquee-band">
   <div class="marquee-inner">
     <div class="marquee-content">
@@ -562,7 +562,9 @@
 <!-- ABOUT -->
 <section id="about" style="padding:8rem 3rem;">
   <div class="reveal about-inner">
-    <div class="about-visual">
+    
+    <!-- KHỐI CHỨA NHÂN VẬT & HIỆU ỨNG HOLD TO DELETE -->
+    <div class="about-visual" style="position: relative;">
       <div class="about-lines">
         <div class="aline"></div><div class="aline"></div><div class="aline"></div>
         <div class="aline"></div><div class="aline"></div><div class="aline"></div>
@@ -571,9 +573,41 @@
         <ellipse cx="150" cy="200" rx="90" ry="35" stroke="rgba(255,60,30,.28)" stroke-width="1.5" stroke-dasharray="6 6"><animateTransform attributeName="transform" type="rotate" from="0 150 200" to="360 150 200" dur="8s" repeatCount="indefinite"/></ellipse>
         <ellipse cx="150" cy="200" rx="70" ry="70" stroke="rgba(240,236,226,.12)" stroke-width="1.5" stroke-dasharray="4 10"><animateTransform attributeName="transform" type="rotate" from="360 150 200" to="0 150 200" dur="12s" repeatCount="indefinite"/></ellipse>
       </svg>
-      <img src="character-walk.gif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:1;" alt="Character Walk">
+
+      <!-- WRAPPER CHỨA NHÂN VẬT VÀ NGƯỜI QUE -->
+      <div id="character-wrapper" style="position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+
+        <!-- NGƯỜI QUE (Ẩn mặc định, sẽ hiện ra khi bị xóa) -->
+        <svg id="character-stickman" style="position:absolute; width: 50%; height: 50%; opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease; transform: scale(0.9);" viewBox="0 0 100 100" stroke="rgba(240,236,226,.8)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+           <circle cx="50" cy="25" r="10" /> <!-- Đầu -->
+           <line x1="50" y1="35" x2="50" y2="65" /> <!-- Thân -->
+           <line x1="50" y1="45" x2="35" y2="55" /> <!-- Tay trái -->
+           <line x1="50" y1="45" x2="65" y2="55" /> <!-- Tay phải -->
+           <line x1="50" y1="65" x2="38" y2="90" /> <!-- Chân trái -->
+           <line x1="50" y1="65" x2="62" y2="90" /> <!-- Chân phải -->
+           <circle cx="46" cy="23" r="1" fill="rgba(240,236,226,.8)" stroke="none"/> <!-- Mắt -->
+           <circle cx="54" cy="23" r="1" fill="rgba(240,236,226,.8)" stroke="none"/>
+           <path d="M47 28 Q50 26 53 28" stroke-width="2"/> <!-- Miệng buồn -->
+        </svg>
+
+        <!-- ẢNH GIF GỐC -->
+        <img id="character-gif" src="character-walk.gif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain; transition: all 0.4s ease;" alt="Character Walk">
+      </div>
+
       <div class="about-big-text" style="z-index:3;">TRAN HA GIANG</div>
+
+      <!-- NÚT HOLD TO DELETE ĐÃ ĐƯỢC CHỈNH LÊN VỊ TRÍ AN TOÀN -->
+      <div id="hold-btn-container" style="position:absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index:10; display:flex; flex-direction:column; align-items:center; cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;" oncontextmenu="return false;">
+        <lottie-player
+          id="hold-lottie"
+          src="hold-to-delete.json"
+          background="transparent"
+          speed="1"
+          style="width: 200px; height: 75px; pointer-events: none;">
+        </lottie-player>
+      </div>
     </div>
+    
     <div class="about-text">
       <div class="section-tag">Về tôi</div>
       <h2>Chuyển động<br>là ngôn ngữ</h2>
@@ -907,8 +941,11 @@
 
 <footer>
   <p>© 2026 Trần Hà Giang</p>
-  <p style="font-family:'Roboto Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,236,226,.18);">DESIGNED & ANIMATED BY <span style="color:var(--accent);">TRANHAGIANG</span></p>
+  <p style="font-family:'Roboto Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,236,226,.18);">DESIGNED & ANIMATED BY <span style="color:var(--accent);">TRẦNHÀGIANG</span></p>
 </footer>
+
+<!-- THÊM LOTTIE PLAYER CHUẨN XÁC NẰM NGOÀI CÙNG -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <script>
 // KIỂM TRA THIẾT BỊ DI ĐỘNG ĐỂ TỐI ƯU
@@ -944,7 +981,6 @@ fabMain.addEventListener('click', (e) => {
   fabMenu.classList.toggle('open');
 });
 
-// Click ra ngoài thì đóng menu lại
 document.addEventListener('click', (e) => {
   if (!fabMain.contains(e.target) && !fabMenu.contains(e.target)) {
     fabMain.classList.remove('open');
@@ -959,7 +995,7 @@ window.addEventListener('scroll',()=>{
   prog.style.width=p+'%';
 });
 
-// CURSOR (Chỉ khởi tạo nếu không phải mobile)
+// CURSOR
 const cursor=document.getElementById('cursor');
 const ring=document.getElementById('cursorRing');
 let mx=0,my=0,rx=0,ry=0;
@@ -1037,10 +1073,8 @@ const typeObs = new IntersectionObserver((entries, observer) => {
 }, { threshold: 0.2 }); 
 typeElements.forEach(el => typeObs.observe(el));
 
-
 // CHỈ CHẠY CÁC HIỆU ỨNG TƯƠNG TÁC CHUỘT NẶNG NẾU LÀ MÁY TÍNH
 if(!isMobile) {
-  
   // PARALLAX ORBS
   document.addEventListener('mousemove',e=>{
     const nx=(e.clientX/window.innerWidth-.5)*2; const ny=(e.clientY/window.innerHeight-.5)*2;
@@ -1154,6 +1188,59 @@ window.addEventListener('scroll',()=>{
   sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
   navLinks.forEach(a=>{a.style.opacity=a.getAttribute('href')==='#'+cur?'1':'';});
 });
+
+// ==========================================
+// HIỆU ỨNG HOLD TO DELETE NHÂN VẬT
+// ==========================================
+const holdContainer = document.getElementById('hold-btn-container');
+const holdLottie = document.getElementById('hold-lottie');
+const charGif = document.getElementById('character-gif');
+const charStickman = document.getElementById('character-stickman');
+
+let holdTimer;
+let isDeleted = false;
+const HOLD_DURATION = 2050; // Khoảng thời gian tương ứng với vòng quay Hold
+
+const startHold = (e) => {
+  e.preventDefault(); 
+  if(isDeleted) return;
+
+  charGif.style.filter = "grayscale(100%) sepia(100%) hue-rotate(-50deg) saturate(500%) blur(1px)";
+  charGif.style.transform = "scale(0.95) rotate(-2deg)";
+  holdLottie.play(); 
+
+  holdTimer = setTimeout(() => {
+    isDeleted = true;
+    charGif.style.opacity = '0';
+    charStickman.style.opacity = '1';
+    charStickman.style.transform = 'scale(1)';
+    
+    setTimeout(() => {
+      charGif.style.opacity = '1';
+      charGif.style.filter = "none";
+      charGif.style.transform = "scale(1)";
+      charStickman.style.opacity = '0';
+      charStickman.style.transform = 'scale(0.9)';
+      isDeleted = false;
+      holdLottie.stop(); 
+    }, 4000);
+  }, HOLD_DURATION);
+};
+
+const cancelHold = () => {
+  if(isDeleted) return;
+  clearTimeout(holdTimer);
+  holdLottie.stop(); 
+  charGif.style.filter = "none";
+  charGif.style.transform = "scale(1)";
+};
+
+holdContainer.addEventListener('mousedown', startHold);
+holdContainer.addEventListener('touchstart', startHold);
+holdContainer.addEventListener('mouseup', cancelHold);
+holdContainer.addEventListener('mouseleave', cancelHold);
+holdContainer.addEventListener('touchend', cancelHold);
+
 </script>
 </body>
 </html>
