@@ -321,7 +321,8 @@
   .btn-messenger.open { background: var(--mute); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
 
   /* HERO */
-  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 3rem;position:relative;overflow:hidden;background:var(--bg);}
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:8rem 3rem 4rem;position:relative;background:var(--bg);}
+  .hero-orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
   .hero-left{display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;padding-top:6rem;}
   .hero-right{display:flex;align-items:center;justify-content:center;position:relative;z-index:2;padding-top:5rem;}
   .hero-visual{width:100%;max-width:440px;aspect-ratio:1;position:relative;}
@@ -350,7 +351,7 @@
   @keyframes glitch2{0%,85%,100%{transform:none;opacity:0;}86%{transform:translate(4px,0);opacity:.5;}88%{transform:translate(-4px,0);opacity:.5;}90%{transform:translate(2px,0);opacity:.5;}92%{transform:none;opacity:0;}}
 
   .hero-sub{margin-top:1.8rem;max-width:420px;font-size:.92rem;line-height:1.75;opacity:0;animation:fadeUp .9s .65s forwards;color:rgba(var(--ink-rgb),.5); min-height: 4rem;}
-  .hero-cta{margin-top:2.5rem;display:flex;align-items:center;gap:2rem;opacity:0;animation:fadeUp .9s .9s forwards;}
+  .hero-cta{margin-top:2.5rem;display:flex;align-items:center;gap:2rem;opacity:0;animation:fadeUp .9s .9s forwards;position:relative;z-index:6;}
   
   .magnetic { display: inline-flex; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform; }
   .btn-primary{align-items:center;gap:.7rem;padding:.9rem 2rem;background:var(--accent);color:#fff;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));}
@@ -375,7 +376,7 @@
   }
 
   /* MARQUEE BAND */
-  .marquee-band{background:var(--accent);overflow:hidden;padding:.7rem 0;position:relative;z-index:10;display:flex;}
+  .marquee-band{background:var(--accent);overflow:hidden;padding:.7rem 0;position:relative;z-index:5;display:flex;}
   .marquee-inner{display:flex;width:max-content;animation:marqueeRun 35s linear infinite;}
   .marquee-content{display:flex;}
   .marquee-content span{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;padding:0 2rem;white-space:nowrap;}
@@ -582,6 +583,14 @@
   /* REVEAL */
   .reveal{opacity:0;transform:translateY(40px);transition:opacity .85s,transform .85s;}
   .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* MÀN HÌNH NHỎ - VỪA (tablet/laptop nhỏ) */
+  @media(max-width:1100px){
+    .about-inner{grid-template-columns:1fr;gap:2.5rem;}
+    .about-visual{aspect-ratio:4/3;max-height:420px;}
+    section{padding:6rem 2rem;}
+    h2{font-size:clamp(2.5rem,5vw,5rem);}
+  }
 
   /* TỐI ƯU MOBILE CHỐNG GIẬT LAG & RESPONSIVE NÚT HOLD TO DELETE */
   @media(max-width:768px){
@@ -802,10 +811,12 @@
 <!-- HERO -->
 <main id="main-content">
 <section class="hero">
-  <div class="hero-grid"></div>
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
+  <div class="hero-orbs">
+    <div class="hero-grid"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
   <div class="hero-counter">Motion × Design × Story</div>
 
   <div class="hero-left">
@@ -883,7 +894,7 @@
   </div>
 </section>
 
-<!-- MARQUEE BAND -->
+<!-- MARQUEE BAND (đặt sau hero, dưới fold) -->
 <div class="marquee-band">
   <div class="marquee-inner">
     <div class="marquee-content">
@@ -954,7 +965,7 @@
         </svg>
 
         <!-- ẢNH GIF GỐC -->
-        <img id="character-gif" src="character-walk.gif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain; transition: all 0.4s ease;" alt="Nhân vật hoạt hình Trần Hà Giang đang đi bộ">
+        <img id="character-gif" src="character-walk.gif" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:top center; transition: all 0.4s ease;" alt="Nhân vật hoạt hình Trần Hà Giang đang đi bộ">
       </div>
 
       <div class="about-big-text">TRAN HA GIANG</div>
@@ -1557,11 +1568,17 @@ if(isMobile) {
     body.light nav.scrolled { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
     .btn-back-to-top { backdrop-filter: none !important; }
     @keyframes gridMove { from{background-position:0 0;} to{background-position:0 0;} }
-    @keyframes orbFloat { from{transform:none;} to{transform:none;} }
     .orb { animation: none !important; filter: blur(60px) !important; }
     .marquee-inner { animation-duration: 60s !important; }
+    .hero-right { display: none !important; }
+    .hero { grid-template-columns: 1fr !important; }
   `;
   document.head.appendChild(style);
+  // Tắt toàn bộ SVG animations để tránh lag
+  document.querySelectorAll('animate, animateTransform, animateMotion').forEach(el => {
+    el.setAttribute('repeatCount', '0');
+    el.setAttribute('dur', '0.001s');
+  });
 }
 
 // LOADER
