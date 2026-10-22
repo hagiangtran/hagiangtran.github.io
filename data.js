@@ -60,6 +60,8 @@ const PROJECTS = [
 
 /* 2) KÊNH YOUTUBE / CHANNELS (thêm stat:"123K subs" nếu muốn hiện số sub) */
 const CHANNELS = [
+   {name:"Daily Quiz", url:"https://www.youtube.com/@DailyQuizYT",stat:"2.6M subs",
+   desc:{vi:"Kênh quiz trên YouTube mà mình đã xây dựng hình ảnh và làm video có video đạt 9Tr views.", en:"The YouTube quiz channel for which I developed the brand identity and created videos has a video that reached 9M views."}},
   {name:"Monkey Quiz", url:"https://www.youtube.com/@MonkeyQuiz.",stat:"632K subs",
    desc:{vi:"Kênh quiz trên YouTube mà mình đã xây dựng hình ảnh và làm video có video đạt 18Tr views.", en:"The YouTube quiz channel for which I developed the brand identity and created videos has a video that reached 18M views."}},
   {name:"Quiz Royale", url:"https://www.youtube.com/@QuizRoyaleTV",stat:"35K subs",
