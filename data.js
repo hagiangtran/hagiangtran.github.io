@@ -55,7 +55,9 @@ const PROJECTS = [
   {type:"youtube", yt:"F6wygbZMieQ",
    title:{vi:"YOUTUBE 2", en:"YOUTUBE 2"}, note:{vi:"Video YouTube · 14:24", en:"YouTube video · 14:24"}},
   {type:"youtube", yt:"4mGoSnEf51U",
-   title:{vi:"YOUTUBE 3", en:"YOUTUBE 3"}, note:{vi:"Video YouTube · 13:26", en:"YouTube video · 13:26"}}
+   title:{vi:"YOUTUBE 3", en:"YOUTUBE 3"}, note:{vi:"Video YouTube · 13:26", en:"YouTube video · 13:26"}},
+   {type:"youtube", yt:"D1jKSvq2EqA",
+   title:{vi:"YOUTUBE 4", en:"YOUTUBE 4"}, note:{vi:"Video YouTube · 1:12", en:"YouTube video · 1:12"}}
 ];
 
 /* 2) KÊNH YOUTUBE / CHANNELS (thêm stat:"123K subs" nếu muốn hiện số sub) */
