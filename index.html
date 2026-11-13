@@ -99,7 +99,8 @@ h1 em{font-style:normal;color:transparent;-webkit-text-stroke:2px var(--a);displ
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:34px}
 .filters button{min-height:42px;padding:0 20px;border:1px solid rgba(var(--rgb),.3);background:transparent;font:400 .72rem var(--fm);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
 .filters button[aria-pressed=true]{background:var(--a);border-color:var(--a);color:var(--on)}
-.gh{display:flex;align-items:baseline;gap:14px;margin:46px 0 18px;padding-bottom:12px;border-bottom:1px solid rgba(var(--rgb),.15)}
+.gh{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 14px;margin:46px 0 18px;padding-bottom:12px;border-bottom:1px solid rgba(var(--rgb),.15)}
+.gh-note{margin-left:auto;font:400 .72rem var(--fm);letter-spacing:.08em;opacity:.75}
 .gh:first-child{margin-top:0}
 .gh h3{font:800 2rem var(--fd);letter-spacing:.06em;text-transform:uppercase}
 .gh span{font:400 .75rem var(--fm);color:var(--a)}
@@ -310,10 +311,11 @@ function render(){
  const b=BAND.map(w=>`<span>${w}</span>`).join('');
  $('#band').innerHTML=`<div style="display:flex">${b}${b}</div><div style="display:flex">${b}${b}</div>`;
  const list=PROJECTS.filter(vis);
- $('#filters').innerHTML=['all','motion','social','youtube'].map(k=>`<button type="button" data-f="${k}" aria-pressed="${k===filter}">${T(k)}</button>`).join('');
- $('#groups').innerHTML=['motion','social','youtube'].filter(k=>filter==='all'||filter===k).map(k=>{
+ $('#filters').innerHTML=['all','motion','social','youtube','mobile'].map(k=>`<button type="button" data-f="${k}" aria-pressed="${k===filter}">${T(k)}</button>`).join('');
+ $('#groups').innerHTML=['motion','social','youtube','mobile'].filter(k=>filter==='all'||filter===k).map(k=>{
   const g=list.filter(p=>p.type===k);if(!g.length)return'';
-  return `<div class="grp" data-k="${k}"><div class="gh"><h3>${T(k)}</h3><span>${String(g.length).padStart(2,'0')}</span></div><div class="grid">${g.map(card).join('')}</div></div>`;
+  const note=L[lang][k+'Note']?`<small class="gh-note">* ${esc(L[lang][k+'Note'])}</small>`:'';
+  return `<div class="grp" data-k="${k}"><div class="gh"><h3>${T(k)}</h3><span>${String(g.length).padStart(2,'0')}</span>${note}</div><div class="grid">${g.map(card).join('')}</div></div>`;
  }).join('')||`<div class="empty">${T('empty')}</div>`;
  $('#ch').innerHTML=CHANNELS.map(c=>`<a href="${esc(c.url)}" target="_blank" rel="noopener"><span class="ar">↗</span><div><h3>${esc(c.name)}</h3><p>${esc(c.desc[lang])}</p></div><small>${c.stat?esc(c.stat)+' · ':''}${T('watch')}</small></a>`).join('');
  $('#exp').innerHTML=L[lang].exp.map(e=>`<div class="ex"><div class="d">${e[1]}</div><div><h3>${e[0]}</h3><p>${e[2]}</p></div></div>`).join('');
