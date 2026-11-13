@@ -7,8 +7,8 @@ const DEFAULT_THEME = "cream";
 
 /* =====================================================================
    1) SẢN PHẨM / PROJECTS — chỉ cần sửa phần này
-   type:  "social" | "motion" | "youtube"
-   file:  đường dẫn mp4/gif trong assets/media/   (social, motion)
+   type:  "social" | "motion" | "youtube" | "mobile"
+   file:  đường dẫn mp4/gif trong assets/media/   (social, motion, mobile)
    yt:    ID video YouTube (phần sau v=)           (youtube)
    thumb: ảnh đại diện (tuỳ chọn, nên có). (tỉ lệ khung hình tự nhận theo thumbnail)
    ===================================================================== */
@@ -57,7 +57,15 @@ const PROJECTS = [
   {type:"youtube", yt:"4mGoSnEf51U",
    title:{vi:"YOUTUBE 3", en:"YOUTUBE 3"}, note:{vi:"Video YouTube · 13:26", en:"YouTube video · 13:26"}},
    {type:"youtube", yt:"D1jKSvq2EqA",
-   title:{vi:"YOUTUBE 4", en:"YOUTUBE 4"}, note:{vi:"Video YouTube · 1:12", en:"YouTube video · 1:12"}}
+   title:{vi:"YOUTUBE 4", en:"YOUTUBE 4"}, note:{vi:"Video YouTube · 1:12", en:"YouTube video · 1:12"}},
+
+  /* ---- MOBILE APP x CLAUDE ---- */
+  {type:"mobile", file:"assets/media/mobile-app-1.mp4", thumb:"assets/media/mobile-app-1.jpg",
+   title:{vi:"Mobile App 1", en:"Mobile App 1"}, note:{vi:"Mobile App x Claude · 0:30", en:"Mobile App x Claude · 0:30"}},
+  {type:"mobile", file:"assets/media/mobile-app-2.mp4", thumb:"assets/media/mobile-app-2.jpg",
+   title:{vi:"Mobile App 2", en:"Mobile App 2"}, note:{vi:"Mobile App x Claude · 0:30", en:"Mobile App x Claude · 0:30"}},
+  {type:"mobile", file:"assets/media/mobile-app-3.mp4", thumb:"assets/media/mobile-app-3.jpg",
+   title:{vi:"Mobile App 3", en:"Mobile App 3"}, note:{vi:"Mobile App x Claude · 0:30", en:"Mobile App x Claude · 0:30"}}
 ];
 
 /* 2) KÊNH YOUTUBE / CHANNELS (thêm stat:"123K subs" nếu muốn hiện số sub) */
@@ -78,7 +86,7 @@ const L = {
   bio:"Editor/animator hoạt động từ 2020, có kinh nghiệm thực chiến trong các mảng esports, âm nhạc, bất động sản và YouTube quốc tế. Mình dùng thành thạo hệ phần mềm đồ họa cùng AI để làm ra những video sắc nét, mượt mà và đúng nhu cầu người xem.",
   navWork:"Sản phẩm", navChannels:"Kênh YouTube", navAi:"AI", navExp:"Kinh nghiệm", navSkill:"Kỹ năng", navContact:"Liên hệ",
   ctaWork:"Xem sản phẩm", ctaContact:"Liên hệ", contactTitle:"Cùng làm việc nhé", call:"Gọi điện",
-  all:"Tất cả", social:"Social", motion:"Motion", youtube:"YouTube", empty:"Chưa có sản phẩm nào trong mục này.",
+  all:"Tất cả", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"Sản phẩm chỉ dùng cho mục đích cá nhân", empty:"Chưa có sản phẩm nào trong mục này.",
   watch:"Xem kênh", close:"Đóng ✕",
   exp:[
    ["Goda Media","9/2023 – 10/2026","Xử lý hình ảnh, video cho sản phẩm YouTube Mỹ."],
@@ -98,7 +106,7 @@ const L = {
   bio:"Editor and animator working since 2020, with hands-on experience in esports, music, real estate and international YouTube. I use the full graphics software stack together with AI to make sharp, smooth videos that fit what the audience needs.",
   navWork:"Work", navChannels:"Channels", navAi:"AI", navExp:"Experience", navSkill:"Skills", navContact:"Contact",
   ctaWork:"View work", ctaContact:"Contact me", contactTitle:"Let’s work together", call:"Call",
-  all:"All", social:"Social", motion:"Motion", youtube:"YouTube", empty:"Nothing in this category yet.",
+  all:"All", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"For personal use only", empty:"Nothing in this category yet.",
   watch:"Visit channel", close:"Close ✕",
   exp:[
    ["Goda Media","9/2023 – 10/2026","Image and video processing for US YouTube products."],
