@@ -311,8 +311,8 @@ function render(){
  const b=BAND.map(w=>`<span>${w}</span>`).join('');
  $('#band').innerHTML=`<div style="display:flex">${b}${b}</div><div style="display:flex">${b}${b}</div>`;
  const list=PROJECTS.filter(vis);
- $('#filters').innerHTML=['all','motion','social','youtube','mobile'].map(k=>`<button type="button" data-f="${k}" aria-pressed="${k===filter}">${T(k)}</button>`).join('');
- $('#groups').innerHTML=['motion','social','youtube','mobile'].filter(k=>filter==='all'||filter===k).map(k=>{
+ $('#filters').innerHTML=['all','motion','social','youtube','mobile','shortdrama'].map(k=>`<button type="button" data-f="${k}" aria-pressed="${k===filter}">${T(k)}</button>`).join('');
+ $('#groups').innerHTML=['motion','social','youtube','mobile','shortdrama'].filter(k=>filter==='all'||filter===k).map(k=>{
   const g=list.filter(p=>p.type===k);if(!g.length)return'';
   const note=L[lang][k+'Note']?`<small class="gh-note">* ${esc(L[lang][k+'Note'])}</small>`:'';
   return `<div class="grp" data-k="${k}"><div class="gh"><h3>${T(k)}</h3><span>${String(g.length).padStart(2,'0')}</span>${note}</div><div class="grid">${g.map(card).join('')}</div></div>`;
