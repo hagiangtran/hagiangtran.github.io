@@ -6,22 +6,12 @@ const DEFAULT_THEME = "cream";
 
 /* =====================================================================
    1) SẢN PHẨM / PROJECTS — chỉ cần sửa phần này
-   type:  "beauty" | "social" | "motion" | "youtube" | "mobile" | "shortdrama"
+   type:  "social" | "motion" | "youtube" | "mobile" | "shortdrama"
    file:  đường dẫn mp4/gif trong assets/media/   (social, motion, mobile)
    yt:    ID video YouTube (phần sau v=)           (youtube)
    thumb: ảnh đại diện (tuỳ chọn, nên có). (tỉ lệ khung hình tự nhận theo thumbnail)
    ===================================================================== */
 const PROJECTS = [
-  /* ---- THẨM MỸ (mới) ---- */
-  {type:"beauty", file:"assets/media/tham-my-1.mp4", thumb:"assets/media/tham-my-1.jpg",
-   title:{vi:"Lấy lại vẻ ngoài trẻ trung", en:"Regain a youthful look"}, note:{vi:"Video thẩm mỹ · 1:07", en:"Aesthetic clinic video · 1:07"}},
-  {type:"beauty", file:"assets/media/tham-my-2.mp4", thumb:"assets/media/tham-my-2.jpg",
-   title:{vi:"Mẹ bỉm lấy lại tự tin với Eye Rejuv", en:"A new mom regains confidence with Eye Rejuv"}, note:{vi:"Video thẩm mỹ · 0:25", en:"Aesthetic clinic video · 0:25"}},
-  {type:"beauty", file:"assets/media/tham-my-3.mp4", thumb:"assets/media/tham-my-3.jpg",
-   title:{vi:"Quầng thâm mắt sau sinh", en:"Postpartum dark circles"}, note:{vi:"Video thẩm mỹ · 1:00", en:"Aesthetic clinic video · 1:00"}},
-  {type:"beauty", file:"assets/media/tham-my-4.mp4", thumb:"assets/media/tham-my-4.jpg",
-   title:{vi:"Lấy lại chục tuổi chỉ sau 60 phút", en:"Ten years younger in just 60 minutes"}, note:{vi:"Video thẩm mỹ · 0:30", en:"Aesthetic clinic video · 0:30"}},
-
   /* ---- MOTION (auto:true = tự phát lặp khi cuộn tới) ---- */
   {type:"motion", auto:true, file:"assets/media/mbbankfinal.mp4", thumb:"assets/media/mbbankfinal.jpg",
    title:{vi:"MB Bank", en:"MB Bank"}, note:{vi:"Motion graphics", en:"Motion graphics"}},
@@ -44,7 +34,15 @@ const PROJECTS = [
   {type:"motion", auto:true, file:"assets/media/motion-4.mp4", thumb:"assets/media/motion-4.jpg",
    title:{vi:"Motion 4", en:"Motion 4"}, note:{vi:"Motion graphics", en:"Motion graphics"}},
 
-  /* ---- SOCIAL ---- */
+  /* ---- SOCIAL (4 video thẩm mỹ mới ở đầu, isNew:true = gắn nhãn "Mới") ---- */
+  {type:"social", isNew:true, file:"assets/media/tham-my-1.mp4", thumb:"assets/media/tham-my-1.jpg",
+   title:{vi:"Lấy lại vẻ ngoài trẻ trung", en:"Regain a youthful look"}, note:{vi:"Video thẩm mỹ · 1:07", en:"Aesthetic clinic video · 1:07"}},
+  {type:"social", isNew:true, file:"assets/media/tham-my-2.mp4", thumb:"assets/media/tham-my-2.jpg",
+   title:{vi:"Mẹ bỉm lấy lại tự tin với Eye Rejuv", en:"A new mom regains confidence with Eye Rejuv"}, note:{vi:"Video thẩm mỹ · 0:25", en:"Aesthetic clinic video · 0:25"}},
+  {type:"social", isNew:true, file:"assets/media/tham-my-3.mp4", thumb:"assets/media/tham-my-3.jpg",
+   title:{vi:"Quầng thâm mắt sau sinh", en:"Postpartum dark circles"}, note:{vi:"Video thẩm mỹ · 1:00", en:"Aesthetic clinic video · 1:00"}},
+  {type:"social", isNew:true, file:"assets/media/tham-my-4.mp4", thumb:"assets/media/tham-my-4.jpg",
+   title:{vi:"Lấy lại chục tuổi chỉ sau 60 phút", en:"Ten years younger in just 60 minutes"}, note:{vi:"Video thẩm mỹ · 0:30", en:"Aesthetic clinic video · 0:30"}},
   {type:"social", file:"assets/media/tiktok1.mp4", thumb:"assets/media/tiktok1.jpg",
    title:{vi:"TikTok 1", en:"TikTok 1"}, note:{vi:"Video ngắn · 0:26", en:"Short-form · 0:26"}},
   {type:"social", file:"assets/media/tiktok2.mp4", thumb:"assets/media/tiktok2.jpg",
@@ -87,16 +85,38 @@ const PROJECTS = [
    title:{vi:"Short Drama 4", en:"Short Drama 4"}, note:{vi:"Short Drama · 1:05", en:"Short Drama · 1:05"}}
 ];
 
-/* 2) KÊNH YOUTUBE / CHANNELS (thêm stat:"123K subs" nếu muốn hiện số sub) */
+/* 2) KÊNH YOUTUBE MÌNH ĐÃ LÀM VIDEO
+   top: lượt xem của video cao nhất mình làm | role: việc mình làm cho kênh */
 const CHANNELS = [
-   {name:"Daily Quiz", url:"https://www.youtube.com/@DailyQuizYT",stat:"2.6M subs",
-   desc:{vi:"Kênh quiz trên YouTube mà mình đã xây dựng hình ảnh và làm video có video đạt 9Tr views.", en:"The YouTube quiz channel for which I developed the brand identity and created videos has a video that reached 9M views."}},
-  {name:"Monkey Quiz", url:"https://www.youtube.com/@MonkeyQuiz.",stat:"632K subs",
-   desc:{vi:"Kênh quiz trên YouTube mà mình đã xây dựng hình ảnh và làm video có video đạt 18Tr views.", en:"The YouTube quiz channel for which I developed the brand identity and created videos has a video that reached 18M views."}},
-  {name:"Quiz Royale", url:"https://www.youtube.com/@QuizRoyaleTV",stat:"35K subs",
-   desc:{vi:"Kênh quiz trên YouTube mà mình đã dựng video có video đạt 500K views.", en:"One of the videos I produced for a YouTube quiz channel reached 500K views."}},
-  {name:"Quiz Kingdom", url:"https://www.youtube.com/@QuizKingdomYT",stat:"853K subs",
-   desc:{vi:"Kênh quiz trên YouTube mà mình đã dựng video có video đạt 9Tr views.", en:"One of the videos I produced for a YouTube quiz channel reached 9M views."}}
+  {name:"Monkey Quiz", url:"https://www.youtube.com/@MonkeyQuiz.", stat:"632K subs", top:{vi:"18Tr", en:"18M"},
+   role:{vi:["Xây dựng hình ảnh kênh","Làm video"], en:["Channel branding","Video production"]},
+   desc:{vi:"Mình xây dựng hình ảnh cho kênh và trực tiếp làm video. Video nổi bật nhất đã vượt 18 triệu lượt xem.", en:"I built the channel's visual identity and produced its videos. The top one has passed 18 million views."}},
+  {name:"Daily Quiz", url:"https://www.youtube.com/@DailyQuizYT", stat:"2.6M subs", top:{vi:"9Tr", en:"9M"},
+   role:{vi:["Xây dựng hình ảnh kênh","Làm video"], en:["Channel branding","Video production"]},
+   desc:{vi:"Kênh quiz 2,6 triệu người đăng ký. Mình làm hình ảnh kênh và video, có video chạm mốc 9 triệu lượt xem.", en:"A 2.6M-subscriber quiz channel. I made its branding and videos, one of which hit 9 million views."}},
+  {name:"Quiz Kingdom", url:"https://www.youtube.com/@QuizKingdomYT", stat:"853K subs", top:{vi:"9Tr", en:"9M"},
+   role:{vi:["Dựng video"], en:["Video editing"]},
+   desc:{vi:"Mình dựng video cho kênh, trong đó có video đạt 9 triệu lượt xem.", en:"I edited videos for this channel, including one with 9 million views."}},
+  {name:"Quiz Royale", url:"https://www.youtube.com/@QuizRoyaleTV", stat:"35K subs", top:{vi:"500K", en:"500K"},
+   role:{vi:["Dựng video"], en:["Video editing"]},
+   desc:{vi:"Kênh đang lớn, mình dựng video và có video đạt 500 nghìn lượt xem.", en:"A growing channel where I edit videos; one reached 500K views."}}
+];
+
+/* 2b) DỰ ÁN AI (tóm tắt từ Portfolio AI: https://hagiangtran.github.io/ai-portfolio/) */
+const AI_URL = "https://hagiangtran.github.io/ai-portfolio/";
+const AIP = [
+  {tag:{vi:"Extension Premiere Pro", en:"Premiere Pro extension"}, title:{vi:"Bộ extension tự động hóa Premiere", en:"Premiere automation extensions"},
+   desc:{vi:"Voice Cutter dùng Whisper khớp từng câu kịch bản với đoạn voice, cắt khoảng lặng và tạo sẵn subclip. Footage Replacer, Auto Replace thay hàng trăm footage chỉ trong vài cú bấm.", en:"Voice Cutter uses Whisper to match each script line to the voice-over, trim silences and create subclips. Footage Replacer and Auto Replace swap hundreds of clips in a few clicks."},
+   metric:"60%+", mlabel:{vi:"thời gian dựng được rút ngắn", en:"less editing time"}, tech:["Adobe CEP","ExtendScript","Whisper","Python"]},
+  {tag:{vi:"Pipeline AI", en:"AI pipeline"}, title:{vi:"Pipeline làm phim AI từ một kịch bản", en:"AI film pipeline from one script"},
+   desc:{vi:"AI tách kịch bản thành nhân vật, bối cảnh, đạo cụ; ComfyUI tạo ảnh neo để nhân vật không đổi mặt giữa các cảnh; Wan2.2 chạy local sinh video, thêm TTS và nhạc thành bản 1080p.", en:"AI breaks the script into characters, sets and props; ComfyUI anchor images keep faces consistent; Wan2.2 runs locally to generate shots, then TTS and music make a 1080p cut."},
+   metric:"6", mlabel:{vi:"giai đoạn từ kịch bản đến bản dựng", en:"stages from script to final cut"}, tech:["ComfyUI","Wan2.2","TTS","AI Agent"]},
+  {tag:{vi:"App desktop", en:"Desktop app"}, title:{vi:"Local AI Upscaler ảnh & video 2K/4K", en:"Local AI Upscaler for 2K/4K"},
+   desc:{vi:"Upscale footage cũ và ảnh AI bằng Real-ESRGAN chạy offline trên GPU, không tốn phí cloud. Video được chia từng đợt 200 frame rồi ghép lại bằng ffmpeg.", en:"Upscales old footage and AI images with Real-ESRGAN running offline on the GPU, with no cloud fees. Videos are processed in 200-frame batches and re-joined with ffmpeg."},
+   metric:"16", mlabel:{vi:"ảnh xử lý cùng lúc", en:"images processed at once"}, tech:["Python","Real-ESRGAN","ffmpeg"]},
+  {tag:{vi:"Đang phát triển", en:"In progress"}, title:{vi:"App phim ngắn dọc full-stack", en:"Full-stack vertical drama app"},
+   desc:{vi:"App Flutter xem phim dọc, mở khóa tập bằng xu, quảng cáo hoặc VIP; backend Supabase và trang admin Next.js để đăng nhiều tập cùng lúc.", en:"A Flutter app for vertical dramas with coin, ad or VIP unlocks, a Supabase backend and a Next.js admin to publish many episodes at once."},
+   metric:"3", mlabel:{vi:"phần: mobile, backend, admin", en:"parts: mobile, backend, admin"}, tech:["Flutter","Supabase","Next.js"]}
 ];
 
 /* 3) NỘI DUNG SONG NGỮ */
@@ -105,7 +125,7 @@ const L = {
   bio:"Editor/animator hoạt động từ 2020, có kinh nghiệm thực chiến trong các mảng esports, âm nhạc, bất động sản và YouTube quốc tế. Mình dùng thành thạo hệ phần mềm đồ họa cùng AI để làm ra những video sắc nét, mượt mà và đúng nhu cầu người xem.",
   navWork:"Sản phẩm", navChannels:"Kênh YouTube", navAi:"AI", navExp:"Kinh nghiệm", navSkill:"Kỹ năng", navContact:"Liên hệ",
   ctaWork:"Xem sản phẩm", ctaContact:"Liên hệ", contactTitle:"Cùng làm việc nhé", call:"Gọi điện",
-  all:"Tất cả", beauty:"Thẩm mỹ", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"Sản phẩm chỉ dùng cho mục đích cá nhân", shortdrama:"Short Drama", shortdramaNote:"Sản phẩm chỉ dùng cho mục đích cá nhân", empty:"Chưa có sản phẩm nào trong mục này.",
+  all:"Tất cả", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"Sản phẩm chỉ dùng cho mục đích cá nhân", shortdrama:"Short Drama", shortdramaNote:"Sản phẩm chỉ dùng cho mục đích cá nhân", empty:"Chưa có sản phẩm nào trong mục này.",
   watch:"Xem kênh", close:"Đóng ✕",
   exp:[
    ["Goda Media","9/2023 – 11/2026","Xử lý hình ảnh, video cho sản phẩm YouTube Mỹ."],
@@ -125,7 +145,7 @@ const L = {
   bio:"Editor and animator working since 2020, with hands-on experience in esports, music, real estate and international YouTube. I use the full graphics software stack together with AI to make sharp, smooth videos that fit what the audience needs.",
   navWork:"Work", navChannels:"Channels", navAi:"AI", navExp:"Experience", navSkill:"Skills", navContact:"Contact",
   ctaWork:"View work", ctaContact:"Contact me", contactTitle:"Let’s work together", call:"Call",
-  all:"All", beauty:"Aesthetic clinic", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"For personal use only", shortdrama:"Short Drama", shortdramaNote:"For personal use only", empty:"Nothing in this category yet.",
+  all:"All", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"For personal use only", shortdrama:"Short Drama", shortdramaNote:"For personal use only", empty:"Nothing in this category yet.",
   watch:"Visit channel", close:"Close ✕",
   exp:[
    ["Goda Media","9/2023 – 11/2026","Image and video processing for US YouTube products."],
