@@ -1,18 +1,27 @@
 /* =====================================================================
    DỮ LIỆU WEB — chỉ cần sửa file này (không cần đụng vào index.html)
-   Bảng màu mặc định: indigo | forest | wine | ocean | cream | lilac
-   (người xem vẫn tự đổi được bằng nút bảng màu trên thanh menu)
+   Giao diện mới (11/2026) dùng một bảng màu cố định; DEFAULT_THEME giữ lại cho tương thích, không còn tác dụng.
    ===================================================================== */
 const DEFAULT_THEME = "cream";
 
 /* =====================================================================
    1) SẢN PHẨM / PROJECTS — chỉ cần sửa phần này
-   type:  "social" | "motion" | "youtube" | "mobile" | "shortdrama"
+   type:  "beauty" | "social" | "motion" | "youtube" | "mobile" | "shortdrama"
    file:  đường dẫn mp4/gif trong assets/media/   (social, motion, mobile)
    yt:    ID video YouTube (phần sau v=)           (youtube)
    thumb: ảnh đại diện (tuỳ chọn, nên có). (tỉ lệ khung hình tự nhận theo thumbnail)
    ===================================================================== */
 const PROJECTS = [
+  /* ---- THẨM MỸ (mới) ---- */
+  {type:"beauty", file:"assets/media/tham-my-1.mp4", thumb:"assets/media/tham-my-1.jpg",
+   title:{vi:"Lấy lại vẻ ngoài trẻ trung", en:"Regain a youthful look"}, note:{vi:"Video thẩm mỹ · 1:07", en:"Aesthetic clinic video · 1:07"}},
+  {type:"beauty", file:"assets/media/tham-my-2.mp4", thumb:"assets/media/tham-my-2.jpg",
+   title:{vi:"Mẹ bỉm lấy lại tự tin với Eye Rejuv", en:"A new mom regains confidence with Eye Rejuv"}, note:{vi:"Video thẩm mỹ · 0:25", en:"Aesthetic clinic video · 0:25"}},
+  {type:"beauty", file:"assets/media/tham-my-3.mp4", thumb:"assets/media/tham-my-3.jpg",
+   title:{vi:"Quầng thâm mắt sau sinh", en:"Postpartum dark circles"}, note:{vi:"Video thẩm mỹ · 1:00", en:"Aesthetic clinic video · 1:00"}},
+  {type:"beauty", file:"assets/media/tham-my-4.mp4", thumb:"assets/media/tham-my-4.jpg",
+   title:{vi:"Lấy lại chục tuổi chỉ sau 60 phút", en:"Ten years younger in just 60 minutes"}, note:{vi:"Video thẩm mỹ · 0:30", en:"Aesthetic clinic video · 0:30"}},
+
   /* ---- MOTION (auto:true = tự phát lặp khi cuộn tới) ---- */
   {type:"motion", auto:true, file:"assets/media/mbbankfinal.mp4", thumb:"assets/media/mbbankfinal.jpg",
    title:{vi:"MB Bank", en:"MB Bank"}, note:{vi:"Motion graphics", en:"Motion graphics"}},
@@ -96,10 +105,10 @@ const L = {
   bio:"Editor/animator hoạt động từ 2020, có kinh nghiệm thực chiến trong các mảng esports, âm nhạc, bất động sản và YouTube quốc tế. Mình dùng thành thạo hệ phần mềm đồ họa cùng AI để làm ra những video sắc nét, mượt mà và đúng nhu cầu người xem.",
   navWork:"Sản phẩm", navChannels:"Kênh YouTube", navAi:"AI", navExp:"Kinh nghiệm", navSkill:"Kỹ năng", navContact:"Liên hệ",
   ctaWork:"Xem sản phẩm", ctaContact:"Liên hệ", contactTitle:"Cùng làm việc nhé", call:"Gọi điện",
-  all:"Tất cả", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"Sản phẩm chỉ dùng cho mục đích cá nhân", shortdrama:"Short Drama", shortdramaNote:"Sản phẩm chỉ dùng cho mục đích cá nhân", empty:"Chưa có sản phẩm nào trong mục này.",
+  all:"Tất cả", beauty:"Thẩm mỹ", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"Sản phẩm chỉ dùng cho mục đích cá nhân", shortdrama:"Short Drama", shortdramaNote:"Sản phẩm chỉ dùng cho mục đích cá nhân", empty:"Chưa có sản phẩm nào trong mục này.",
   watch:"Xem kênh", close:"Đóng ✕",
   exp:[
-   ["Goda Media","9/2023 – 10/2026","Xử lý hình ảnh, video cho sản phẩm YouTube Mỹ."],
+   ["Goda Media","9/2023 – 11/2026","Xử lý hình ảnh, video cho sản phẩm YouTube Mỹ."],
    ["TNHH Chính Phát","6/2023 – 8/2023","Quay và dựng video về sản phẩm Vali du lịch."],
    ["Box Studio","4/2022 – 10/2022","Chỉnh sửa video game cho đội tuyển thi đấu PUBG Mobile toàn quốc."],
    ["Nhô Photo","9/2021 – 3/2022","Chỉnh sửa video, hình ảnh về du lịch, bất động sản."],
@@ -116,10 +125,10 @@ const L = {
   bio:"Editor and animator working since 2020, with hands-on experience in esports, music, real estate and international YouTube. I use the full graphics software stack together with AI to make sharp, smooth videos that fit what the audience needs.",
   navWork:"Work", navChannels:"Channels", navAi:"AI", navExp:"Experience", navSkill:"Skills", navContact:"Contact",
   ctaWork:"View work", ctaContact:"Contact me", contactTitle:"Let’s work together", call:"Call",
-  all:"All", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"For personal use only", shortdrama:"Short Drama", shortdramaNote:"For personal use only", empty:"Nothing in this category yet.",
+  all:"All", beauty:"Aesthetic clinic", social:"Social", motion:"Motion", youtube:"YouTube", mobile:"Mobile App x Claude", mobileNote:"For personal use only", shortdrama:"Short Drama", shortdramaNote:"For personal use only", empty:"Nothing in this category yet.",
   watch:"Visit channel", close:"Close ✕",
   exp:[
-   ["Goda Media","9/2023 – 10/2026","Image and video processing for US YouTube products."],
+   ["Goda Media","9/2023 – 11/2026","Image and video processing for US YouTube products."],
    ["Chính Phát Co., Ltd.","6/2023 – 8/2023","Filmed and edited videos for travel suitcase products."],
    ["Box Studio","4/2022 – 10/2022","Edited gameplay videos for a national PUBG Mobile esports team."],
    ["Nhô Photo","9/2021 – 3/2022","Edited travel and real estate videos and photos."],
