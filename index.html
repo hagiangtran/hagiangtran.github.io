@@ -302,11 +302,24 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
 @media(max-width:560px){
  .ann span{display:none}.ann .sh{display:inline}
  .aib{display:none}
- .chs{grid-template-columns:1fr}.chs a:nth-child(even){margin-top:0}.chc{min-height:0}.chc h3{padding-top:28px}
- .stair{grid-template-columns:1fr}.stair a:nth-child(even){margin-top:0}
+ /* băng chuyền vuốt ngang thay cho các dãy thẻ dài */
+ .chs,.stair,.steps{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  margin-left:calc(-1*var(--pad));margin-right:calc(-1*var(--pad));padding:4px var(--pad) 14px;scroll-padding-left:var(--pad);align-items:stretch}
+ .chs::-webkit-scrollbar,.stair::-webkit-scrollbar,.steps::-webkit-scrollbar{display:none}
+ .chs>*,.stair>*,.steps>*{flex:0 0 84%;scroll-snap-align:start;margin-top:0!important}
+ .chc{min-height:0}.chc h3{padding-top:28px}
+ .swipe{display:flex!important}
  .grid{grid-template-columns:1fr}.grid.pt{grid-template-columns:1fr 1fr;gap:10px}
  .pt .card{padding:5px 5px 12px;border-radius:18px}.pt .media{border-radius:13px}.pt .meta{padding:10px 4px 0}.pt .meta h4{font-size:.9rem}
  .step{display:flex}.step .tile{order:0}
+ .h2{font-size:clamp(2.1rem,9vw,2.8rem)}.state .lead{font-size:clamp(2rem,8.6vw,2.6rem)}
+ .sec{padding:72px 0}.state{min-height:0;padding-top:110px}
+ .stats b{font-size:1.9rem}
+ .panel{padding:12px;border-radius:24px}
+ .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-left:-12px;margin-right:-12px;padding:0 12px 4px}
+ .filters::-webkit-scrollbar{display:none}.filters button{flex:none}
+ .mt-in span{padding:8px 16px;font-size:.8rem}
+ #contact{min-height:0;padding:110px 0}
  .ex{grid-template-columns:1fr}.xplist{padding:4px 18px}
  .gh-note{margin-left:0;width:100%}
  .links a{flex:1 1 40%}
@@ -316,6 +329,21 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
  .screen .rtag{left:10px;top:10px;font-size:.68rem;padding:4px 10px}.rdots{display:none}
  dialog{width:100vw}dialog .x{right:8px;top:-50px}
 }
+/* máy cảm ứng / màn nhỏ: bỏ hiệu ứng làm mờ kính (rất tốn GPU khi nền 3D chuyển động), dùng nền đặc hơn */
+@media(max-width:860px),(pointer:coarse){
+ .grain{display:none}
+ .step,.chc,.aic,.panel,.xplist,.skbox,.stats div,.me,.links a,.go.g,.dive,.chip,.screen .rtag,.pl,.av .tagv{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ .panel,.xplist{background:rgba(11,6,40,.82)}
+ .stats div,.me{background:rgba(20,12,60,.72)}
+ .aic{background:linear-gradient(170deg,rgba(32,20,110,.92),rgba(11,6,40,.9))}
+ .chc{background:linear-gradient(175deg,rgba(83,40,255,.7),rgba(46,25,140,.65) 45%,rgba(11,6,40,.8))}
+ .step{background:linear-gradient(170deg,rgba(83,40,255,.55),rgba(32,23,78,.7) 60%,rgba(11,6,40,.75))}
+ .skbox{background:linear-gradient(170deg,rgba(83,40,255,.55),rgba(11,6,40,.85))}
+ .card:hover,.chc:hover,.aic:hover,.dive:hover{transform:none}
+}
+.swipe{display:none;align-items:center;gap:8px;margin-top:4px;font-size:.78rem;color:var(--t2)}
+.swipe::after{content:"";width:34px;height:1px;background:currentColor;animation:sw 1.8s ease-in-out infinite}
+@keyframes sw{50%{transform:translateX(8px)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none}}
 </style>
 </head>
@@ -390,7 +418,7 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
  <div class="in">
   <span class="eyebrow reveal" data-i="tagProc"></span>
   <h2 class="h2 reveal" data-h="procT"></h2>
-  <div class="steps" id="steps"></div>
+  <div class="steps" id="steps"></div><p class="swipe" data-i="swipe"></p>
  </div>
 </section>
 
@@ -400,7 +428,7 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
   <span class="eyebrow reveal">YouTube</span>
   <h2 class="h2 reveal" data-h="chT"></h2>
   <p class="intro reveal" data-i="chIntro"></p>
-  <div class="chs" id="ch"></div>
+  <div class="chs" id="ch"></div><p class="swipe" data-i="swipe"></p>
  </div>
 </section>
 
@@ -424,7 +452,7 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
    <div class="reveal d1"><p class="intro" data-i="aiIntro"></p><div class="flow" id="flow"></div>
     <div class="btns"><a class="go v aiurl" target="_blank" rel="noopener"><span data-i="aiOpen"></span><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9L9 3M4.5 3H9v4.5"/></svg></a></div></div>
   </div>
-  <div class="stair" id="stair"></div>
+  <div class="stair" id="stair"></div><p class="swipe" data-i="swipe"></p>
  </div>
 </section>
 
@@ -470,7 +498,7 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
 /* ===== Chuỗi giao diện (nội dung sản phẩm, kênh, dự án AI nằm trong data.js) ===== */
 const X={
  vi:{annTag:"Mới",ann:"Portfolio AI Builder: extension Premiere, pipeline phim AI và app mình tự xây",annGo:"Xem ngay →",
-  chip:"Từ 2020",dive:"Cuộn xuống & khám phá",fab:"Nhắn Zalo",onYt:"Xem trên YouTube",newTag:"Mới",
+  chip:"Từ 2020",dive:"Cuộn xuống & khám phá",swipe:"Vuốt để xem tiếp",fab:"Nhắn Zalo",onYt:"Xem trên YouTube",newTag:"Mới",
   lead:"Mình dựng những video khiến người xem <em>ở lại tới giây cuối.</em>",
   s1:"năm làm nghề",s2:"sản phẩm trên web",s3:"kênh YouTube đã làm",s4:"lượt xem video cao nhất",
   reelT:"Chuyển động <em>có chủ đích</em>",seeAll:"Xem toàn bộ sản phẩm →",
@@ -488,7 +516,7 @@ const X={
          ["Dựng, motion & hiệu ứng","Dựng nhịp, làm motion graphics, chữ động và chuyển cảnh bằng Premiere Pro và After Effects."],
          ["Hoàn thiện & bàn giao","Chỉnh màu, âm thanh, xuất đúng định dạng từng nền tảng. Khâu lặp lại được tự động hóa bằng công cụ AI mình tự viết."]]},
  en:{annTag:"New",ann:"AI Builder portfolio: Premiere extensions, an AI film pipeline and apps I built",annGo:"Take a look →",
-  chip:"Since 2020",dive:"Scroll down & explore",fab:"Chat on Zalo",onYt:"Watch on YouTube",newTag:"New",
+  chip:"Since 2020",dive:"Scroll down & explore",swipe:"Swipe for more",fab:"Chat on Zalo",onYt:"Watch on YouTube",newTag:"New",
   lead:"I edit videos that keep people watching <em>until the very last second.</em>",
   s1:"years in the craft",s2:"projects on this site",s3:"YouTube channels",s4:"views on my top video",
   reelT:"Motion <em>with intent</em>",seeAll:"See all work →",
@@ -557,7 +585,7 @@ function render(){
  const mq=a=>{const s=a.map(t=>`<span>${t}</span>`).join('');return s+s};
  $('#mq1').innerHTML=mq(TOOLS1);$('#mq2').innerHTML=mq(TOOLS2);
  $('#exp').innerHTML=L[lang].exp.map(e=>`<div class="ex"><div class="d">${esc(e[1])}</div><div><h3>${esc(e[0])}</h3><p>${esc(e[2])}</p></div></div>`).join('');
- $('#skills').innerHTML=SKILLS.map(s=>`<div><b>${esc(s[0])}<em>${s[1]}%</em></b><i style="--w:${s[1]}%"></i></div>`).join('');
+ $('#skills').innerHTML=SKILLS.map(s=>`<div><b>${esc(s[0])}</b><i style="--w:${s[1]}%"></i></div>`).join('');
  layout();watch();
 }
 
@@ -566,7 +594,7 @@ function card(p){
  let m;
  if(p.type==='youtube')m=`<img loading="lazy" src="${p.thumb||`https://i.ytimg.com/vi/${p.yt}/hqdefault.jpg`}" alt=""><span class="pl"></span>`;
  else if(isGif(p.file))m=`<img loading="lazy" src="${p.thumb||p.file}" alt="">`;
- else m=`<video muted loop playsinline preload="${p.auto?'none':'metadata'}" ${p.auto?'data-auto':''} ${p.thumb?`poster="${p.thumb}"`:''} src="${p.file}${p.thumb?'':'#t=0.1'}"></video>${p.auto?'':'<span class="pl"></span>'}`;
+ else m=`<video muted loop playsinline preload="${p.auto||p.thumb?'none':'metadata'}"${p.auto?'data-auto':''} ${p.thumb?`poster="${p.thumb}"`:''} src="${p.file}${p.thumb?'':'#t=0.1'}"></video>${p.auto?'':'<span class="pl"></span>'}`;
  return `<button type="button" class="card${p.type==='youtube'&&!p.thumb?' yt':''}" data-p="${i}" aria-label="${esc(p.title[lang])}">${p.isNew?`<span class="newb">${T('newTag')}</span>`:''}<div class="media">${m}</div><div class="meta"><small>${T(p.type)}</small><h4>${esc(p.title[lang])}</h4><p>${esc(p.note[lang])}</p></div></button>`;
 }
 
@@ -638,9 +666,10 @@ import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 const cv=document.getElementById('world');
 const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-const small=innerWidth<760;
-const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,powerPreference:'high-performance'});
-R.setPixelRatio(Math.min(devicePixelRatio,small?1.4:1.6));
+/* điện thoại: độ phân giải thấp hơn, không khử răng cưa, bong bóng không khúc xạ, tối đa 30 khung hình/giây */
+const small=innerWidth<760||matchMedia('(pointer:coarse)').matches;
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:!small,powerPreference:small?'default':'high-performance'});
+R.setPixelRatio(Math.min(devicePixelRatio,small?1.25:1.6));
 R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.05;
 const S=new THREE.Scene();
 const C=new THREE.PerspectiveCamera(40,1,.1,120);C.position.set(0,0,10);
@@ -685,10 +714,12 @@ for(let k=0;k<3;k++){const f=new THREE.Mesh(new RoundedBoxGeometry(1.1,.68,.08,4
 const halo=new THREE.PointLight(0xb48cff,0,10);hero.add(halo);
 
 /* bong bóng thủy tinh rải khắp không gian */
-const bm=new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0,transmission:1,thickness:.2,ior:1.1,iridescence:1,iridescenceIOR:1.3,iridescenceThicknessRange:[100,700],envMapIntensity:.9});
-const bg=new THREE.SphereGeometry(1,40,28),bubs=[];
+const bm=small
+ ?new THREE.MeshPhysicalMaterial({color:0xf2ecff,roughness:0,metalness:.1,transparent:true,opacity:.28,depthWrite:false,iridescence:1,iridescenceIOR:1.3,iridescenceThicknessRange:[100,700],envMapIntensity:1.4})
+ :new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0,transmission:1,thickness:.2,ior:1.1,iridescence:1,iridescenceIOR:1.3,iridescenceThicknessRange:[100,700],envMapIntensity:.9});
+const bg=small?new THREE.SphereGeometry(1,28,18):new THREE.SphereGeometry(1,40,28),bubs=[];
 const BP=[[-5.6,2.4,-2,1.5],[4.9,-1.2,1,.9],[3.4,3.1,-4,.6],[-2.8,-2,2.2,.45],[6.8,2.6,-6,1.2],[-7.4,-.4,-5,.8],[1.4,-2.6,3,.3],[-3.8,3.6,-6,.5],[8,-2.6,-3,.7],[-8.5,3,-8,1]];
-BP.slice(0,small?6:10).forEach((b,k)=>{const m=new THREE.Mesh(bg,bm);m.position.set(...b.slice(0,3));m.scale.setScalar(b[3]);m.userData={x:b[0],y:b[1],p:k*1.3};S.add(m);bubs.push(m)});
+BP.slice(0,small?5:10).forEach((b,k)=>{const m=new THREE.Mesh(bg,bm);m.position.set(...b.slice(0,3));m.scale.setScalar(b[3]);m.userData={x:b[0],y:b[1],p:k*1.3};S.add(m);bubs.push(m)});
 
 /* sao / hạt sáng cho cảnh đêm */
 const sg=new THREE.BufferGeometry(),sp=[];for(let i=0;i<(small?500:900);i++)sp.push((Math.random()-.5)*60,(Math.random()-.5)*34,-Math.random()*30-4);
@@ -734,8 +765,10 @@ let mx=0,my=0,tx=0,ty=0;addEventListener('pointermove',e=>{tx=e.clientX/W-.5;ty=
 const cur={x:.42,y:.12,s:1,ga:.35,land:1,stars:0},c1=new THREE.Color(0xe4ddf0),c2=new THREE.Color(0xb08fe6),gl=new THREE.Color(0xffd6ea);
 const clock=new THREE.Clock();let last=0,run=!document.hidden;
 document.addEventListener('visibilitychange',()=>{run=!document.hidden;if(run)requestAnimationFrame(loop)});
+const minDt=small?1/30:0;let acc=0;
 function loop(){if(!run)return;requestAnimationFrame(loop);
- const t=calm?0:clock.getElapsedTime(),dt=Math.min(t-last,.05)||.016;last=t;
+ const now=clock.getElapsedTime();if(small&&now-acc<minDt-.002)return;acc=now;
+ const t=calm?0:now,dt=Math.min(now-last,.06)||.016;last=now;
  const st=stateAt(scrollY+H*.5),k=1-Math.pow(.0015,dt);
  for(const q of ['x','y','s','ga','land','stars'])cur[q]+=(st[q]-cur[q])*k;
  ca.set(st.a.c1).lerp(cb.set(st.b.c1),st.t);c1.lerp(ca,k);
