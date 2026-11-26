@@ -245,22 +245,39 @@ h1 span{display:block}
 .sk i::after{content:"";display:block;height:100%;width:0;border-radius:100px;background:var(--grad);transition:width 1.4s var(--ease)}
 .sk.go2 i::after{width:var(--w)}
 
-/* ===== 10. kết: liên hệ ===== */
-#contact{min-height:100vh;display:flex;align-items:center;text-align:center}
-#contact .in{width:100%}
-#contact .h2{font-size:clamp(2.6rem,7.4vw,6.6rem);max-width:13ch;margin-left:auto;margin-right:auto;text-shadow:0 4px 40px rgba(11,6,40,.55)}
-#contact .h2 em{background:linear-gradient(90deg,#b9a4ff,#ffb3d9 55%,#ffd2c2);-webkit-background-clip:text;background-clip:text}
-.mail{display:inline-block;font-weight:300;font-size:clamp(1.4rem,4vw,3rem);letter-spacing:-.03em;line-height:1.2;margin:26px 0 30px;word-break:break-all;border-bottom:1px solid rgba(255,255,255,.4);transition:border-color .3s}
-.mail:hover{border-color:var(--cyan)}
-.links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-.links a{display:inline-flex;align-items:center;justify-content:center;min-width:124px;height:48px;padding:0 20px;border-radius:100px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);font-size:.88rem;transition:background .3s,color .3s}
-.links a:hover{background:#fff;color:var(--ink)}
-.links a.v{background:var(--grad);border-color:transparent}
-footer{padding:24px 0 calc(28px + env(safe-area-inset-bottom));border-top:1px solid var(--line);font-size:.8rem;color:var(--t2);background:rgba(11,6,40,.6);backdrop-filter:blur(10px)}
-footer .in{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+/* ===== 10. màn kết: cửa sổ mở ra "đại dương ánh sáng" ===== */
+.finale{position:relative;height:330vh}
+.fin-stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.portal{position:absolute;left:50%;top:50%;width:var(--pw,62vw);height:var(--ph,58vh);transform:translate(-50%,-50%);border-radius:var(--pr,30px);
+ box-shadow:0 0 0 200vmax #07041a,0 0 80px 10px rgba(80,160,255,.35) inset;pointer-events:none}
+.fin-hint{position:absolute;left:0;right:0;bottom:6vh;text-align:center;font-size:.82rem;color:var(--t2);opacity:var(--hint,1)}
+.fin-hint::after{content:"";display:block;width:1px;height:34px;margin:10px auto 0;background:linear-gradient(#fff,transparent);animation:bob 2s ease-in-out infinite}
+.fin-ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:0 var(--pad) calc(18px + env(safe-area-inset-bottom));
+ opacity:var(--ui,0);transform:translateY(calc((1 - var(--ui,0)) * 40px));visibility:var(--uiv,hidden)}
+.fin-logo{display:inline-flex;align-items:center;gap:9px;font-weight:500;font-size:1.6rem;letter-spacing:-.02em;text-shadow:0 2px 20px rgba(0,30,80,.4)}
+.fin-logo i{width:28px;height:28px;border-radius:50% 50% 50% 12%;background:linear-gradient(135deg,var(--peach),var(--pink) 45%,var(--violet));box-shadow:0 0 22px rgba(255,140,220,.7)}
+.fin-h{font-weight:400;font-size:clamp(2.4rem,6.6vw,6rem);line-height:1.04;letter-spacing:-.035em;margin:10px 0 0;text-shadow:0 4px 40px rgba(0,30,90,.45)}
+.fin-h em{font-style:normal;background:linear-gradient(90deg,#fff,#ffd6f2 50%,#ffe3d6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fin-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+.fin-btns a{display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 20px;border-radius:100px;font-size:.88rem;font-weight:500;transition:transform .3s var(--ease)}
+.fin-btns a:hover{transform:translateY(-2px)}
+.fin-btns .w{background:#fff;color:var(--ink)}
+.fin-btns .g{border:1px solid rgba(255,255,255,.6);background:rgba(10,40,100,.18)}
+.fin-btns .v{background:var(--grad)}
+.fin-mail{display:inline-block;margin-top:14px;font-size:clamp(1rem,2vw,1.25rem);font-weight:300;border-bottom:1px solid rgba(255,255,255,.5);text-shadow:0 2px 16px rgba(0,30,90,.5)}
+.fin-foot{width:100%;max-width:var(--max);margin-top:clamp(34px,7vh,70px);padding-top:18px;border-top:1px solid rgba(255,255,255,.22);display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:20px;text-align:left}
+.fin-cols{display:flex;gap:clamp(22px,4vw,56px)}
+.fin-cols h4{font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:8px}
+.fin-cols a{display:block;font-size:.84rem;line-height:1.85;color:rgba(255,255,255,.92)}
+.fin-cols a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.fin-copy{font-size:.78rem;color:rgba(255,255,255,.7)}
+.fin-soc{justify-self:end;display:flex;gap:8px}
+.fin-soc a{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(10,30,80,.35);border:1px solid rgba(255,255,255,.3);font-size:.72rem;font-weight:600}
 
 .fab{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:40;display:flex;align-items:center;gap:10px;height:52px;padding:0 18px 0 7px;border-radius:100px;background:#0d0a1f;color:#fff;font-size:.88rem;font-weight:500;box-shadow:0 10px 30px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);transition:transform .3s}
 .fab:hover{transform:translateY(-3px)}
+body.finui .fab{opacity:0;pointer-events:none;transform:translateY(20px)}
+.fab{transition:transform .3s,opacity .3s}
 .fab img{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:top}
 
 dialog{border:0;padding:0;background:transparent;width:min(1100px,94vw);max-width:none;max-height:none;margin:auto;overflow:visible;color:#fff}
@@ -319,7 +336,11 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
  .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-left:-12px;margin-right:-12px;padding:0 12px 4px}
  .filters::-webkit-scrollbar{display:none}.filters button{flex:none}
  .mt-in span{padding:8px 16px;font-size:.8rem}
- #contact{min-height:0;padding:110px 0}
+ .finale{height:280vh}
+ .fin-foot{grid-template-columns:1fr;gap:14px;text-align:center;margin-top:26px}
+ .fin-cols{justify-content:center;gap:22px;flex-wrap:wrap}.fin-cols>div:nth-child(n+3){display:none}
+ .fin-soc{justify-self:center}.fin-h{font-size:clamp(2.1rem,10vw,2.8rem)}
+ .fin-btns a{height:42px;padding:0 16px;font-size:.82rem}
  .ex{grid-template-columns:1fr}.xplist{padding:4px 18px}
  .gh-note{margin-left:0;width:100%}
  .links a{flex:1 1 40%}
@@ -471,25 +492,33 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
  </div>
 </section>
 
-<!-- 9. LIÊN HỆ -->
-<section class="sec" id="contact" data-scene="contact">
- <div class="in">
-  <span class="eyebrow reveal" data-i="tagContact"></span>
-  <h2 class="h2 reveal" data-h="contactT"></h2>
-  <a class="mail reveal d1" href="mailto:gt06954@gmail.com">gt06954@gmail.com</a>
-  <div class="links reveal d2">
-   <a href="https://zalo.me/0988770134" target="_blank" rel="noopener">Zalo</a>
-   <a href="tel:+84988770134" data-i="call"></a>
-   <a href="https://www.facebook.com/messages/t/trangiang0303" target="_blank" rel="noopener">Messenger</a>
-   <a href="sms:0988770134">SMS</a>
-   <a href="https://www.facebook.com/trangiang0303/" target="_blank" rel="noopener">Facebook</a>
-   <a href="https://www.instagram.com/y.giangth/" target="_blank" rel="noopener">Instagram</a>
-   <a class="v aiurl" target="_blank" rel="noopener">Portfolio AI ↗</a>
+<!-- 9. MÀN KẾT: cuộn để mở cửa sổ, lặn vào "đại dương ánh sáng", rồi hiện lời mời liên hệ + chân trang -->
+<section class="finale" id="contact" data-scene="contact">
+ <div class="fin-stick" id="finStick">
+  <div class="portal"></div>
+  <p class="fin-hint" data-i="finHint"></p>
+  <div class="fin-ui">
+   <div class="fin-logo"><i></i>giang</div>
+   <h2 class="fin-h" data-h="contactT"></h2>
+   <div class="fin-btns">
+    <a class="w" href="https://zalo.me/0988770134" target="_blank" rel="noopener">Zalo</a>
+    <a class="g" href="tel:+84988770134" data-i="call"></a>
+    <a class="v aiurl" target="_blank" rel="noopener">Portfolio AI ↗</a>
+   </div>
+   <a class="fin-mail" href="mailto:gt06954@gmail.com">gt06954@gmail.com</a>
+   <div class="fin-foot">
+    <span class="fin-copy">© 2026 Trần Hà Giang · Video Editor · Motion Graphics · Animator</span>
+    <div class="fin-cols">
+     <div><h4 data-i="fPort"></h4><a href="#reel">Showreel</a><a href="#work" data-i="navWork"></a><a href="#channels" data-i="navChannels"></a></div>
+     <div><h4 data-i="fCont"></h4><a href="https://www.facebook.com/messages/t/trangiang0303" target="_blank" rel="noopener">Messenger</a><a href="sms:0988770134">SMS</a><a href="mailto:gt06954@gmail.com">Email</a></div>
+     <div><h4>AI</h4><a href="#ai">AI × Editor</a><a class="aiurl" target="_blank" rel="noopener">Portfolio AI ↗</a></div>
+    </div>
+    <div class="fin-soc"><a href="https://www.facebook.com/trangiang0303/" target="_blank" rel="noopener" aria-label="Facebook">Fb</a><a href="https://www.instagram.com/y.giangth/" target="_blank" rel="noopener" aria-label="Instagram">Ig</a><a href="https://zalo.me/0988770134" target="_blank" rel="noopener" aria-label="Zalo">Za</a></div>
+   </div>
   </div>
  </div>
 </section>
 </main>
-<footer><div class="in"><span>© 2026 Trần Hà Giang</span><span>Video Editor · Motion Graphics · Animator</span></div></footer>
 
 <a class="fab" href="https://zalo.me/0988770134" target="_blank" rel="noopener"><img src="assets/img/avatar.jpg" alt=""><span data-i="fab"></span></a>
 <dialog id="dlg"><div class="box"><button class="x" type="button" id="close"></button><div id="stage"></div><div class="cap" id="cap"></div></div></dialog>
@@ -498,7 +527,7 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
 /* ===== Chuỗi giao diện (nội dung sản phẩm, kênh, dự án AI nằm trong data.js) ===== */
 const X={
  vi:{annTag:"Mới",ann:"Portfolio AI Builder: extension Premiere, pipeline phim AI và app mình tự xây",annGo:"Xem ngay →",
-  chip:"Từ 2020",dive:"Cuộn xuống & khám phá",swipe:"Vuốt để xem tiếp",fab:"Nhắn Zalo",onYt:"Xem trên YouTube",newTag:"Mới",
+  chip:"Từ 2020",dive:"Cuộn xuống & khám phá",finHint:"Cuộn tiếp để lặn xuống",fPort:"Portfolio",fCont:"Liên hệ",swipe:"Vuốt để xem tiếp",fab:"Nhắn Zalo",onYt:"Xem trên YouTube",newTag:"Mới",
   lead:"Mình dựng những video khiến người xem <em>ở lại tới giây cuối.</em>",
   s1:"năm làm nghề",s2:"sản phẩm trên web",s3:"kênh YouTube đã làm",s4:"lượt xem video cao nhất",
   reelT:"Chuyển động <em>có chủ đích</em>",seeAll:"Xem toàn bộ sản phẩm →",
@@ -516,7 +545,7 @@ const X={
          ["Dựng, motion & hiệu ứng","Dựng nhịp, làm motion graphics, chữ động và chuyển cảnh bằng Premiere Pro và After Effects."],
          ["Hoàn thiện & bàn giao","Chỉnh màu, âm thanh, xuất đúng định dạng từng nền tảng. Khâu lặp lại được tự động hóa bằng công cụ AI mình tự viết."]]},
  en:{annTag:"New",ann:"AI Builder portfolio: Premiere extensions, an AI film pipeline and apps I built",annGo:"Take a look →",
-  chip:"Since 2020",dive:"Scroll down & explore",swipe:"Swipe for more",fab:"Chat on Zalo",onYt:"Watch on YouTube",newTag:"New",
+  chip:"Since 2020",dive:"Scroll down & explore",finHint:"Keep scrolling to dive in",fPort:"Portfolio",fCont:"Contact",swipe:"Swipe for more",fab:"Chat on Zalo",onYt:"Watch on YouTube",newTag:"New",
   lead:"I edit videos that keep people watching <em>until the very last second.</em>",
   s1:"years in the craft",s2:"projects on this site",s3:"YouTube channels",s4:"views on my top video",
   reelT:"Motion <em>with intent</em>",seeAll:"See all work →",
@@ -647,6 +676,23 @@ if(matchMedia('(hover:hover)').matches){
  new IntersectionObserver(([e])=>{inV=e.isIntersecting;if(inV&&!calm)v.play().catch(()=>{});else v.pause()},{threshold:.3}).observe(v);
  set();})();
 
+/* màn kết: tiến độ cuộn p (0..1) -> kích thước cửa sổ, chữ hiện dần; chia sẻ cho cảnh 3D qua window.__fin */
+const fin=$('#contact'),fs=$('#finStick');window.__fin={p:0,vis:false,x:0,y:0,w:0,h:0};
+const ss=(a,b,x)=>{x=Math.min(Math.max((x-a)/(b-a),0),1);return x*x*(3-2*x)};
+function finUpdate(){
+ const r=fin.getBoundingClientRect(),span=fin.offsetHeight-innerHeight;
+ const p=Math.min(Math.max(-r.top/span,0),1),g=ss(.06,.5,p),ui=ss(.55,.78,p),port=innerWidth<innerHeight;
+ const w0=port?84:62,h0=port?52:58;
+ fs.style.setProperty('--pw',(w0+(100-w0)*g)+'vw');fs.style.setProperty('--ph',(h0+(100-h0)*g)+'vh');
+ fs.style.setProperty('--pr',(30*(1-g))+'px');fs.style.setProperty('--ui',ui);fs.style.setProperty('--uiv',ui>.02?'visible':'hidden');
+ fs.style.setProperty('--hint',1-ss(.02,.12,p));document.body.classList.toggle('finui',ui>.3);
+ const pr=fs.querySelector('.portal').getBoundingClientRect();
+ Object.assign(window.__fin,{p,x:pr.left,y:pr.top,w:pr.width,h:pr.height,vis:pr.bottom>0&&pr.top<innerHeight&&r.bottom>0});
+}
+addEventListener('scroll',finUpdate,{passive:true});addEventListener('resize',finUpdate);finUpdate();
+/* link "Liên hệ" nhảy thẳng tới cuối màn kết, nơi có nút liên hệ */
+document.addEventListener('click',e=>{const a=e.target.closest('a[href="#contact"]');if(!a)return;e.preventDefault();setMenu(false);
+ scrollTo({top:fin.offsetTop+fin.offsetHeight-innerHeight,behavior:calm?'auto':'smooth'})},true);
 const onScroll=()=>{const n=$('#nav');n.classList.toggle('sc',scrollY>40);n.classList.toggle('dk',scrollY>innerHeight*.6)};
 addEventListener('scroll',onScroll,{passive:true});onScroll();
 const links=$$('#links a[href^="#"]');
@@ -676,13 +722,34 @@ const C=new THREE.PerspectiveCamera(40,1,.1,120);C.position.set(0,0,10);
 S.environment=new THREE.PMREMGenerator(R).fromScene(new RoomEnvironment(R),.04).texture;
 
 /* nền trời: quad phủ màn hình, màu đổi theo cảnh */
-const U={c1:{value:new THREE.Color()},c2:{value:new THREE.Color()},g:{value:new THREE.Color()},ga:{value:0},gp:{value:new THREE.Vector2(.72,.6)},t:{value:0}};
+const U={c1:{value:new THREE.Color()},c2:{value:new THREE.Color()},g:{value:new THREE.Color()},ga:{value:0},gp:{value:new THREE.Vector2(.72,.6)},t:{value:0},oc:{value:0},asp:{value:1}};
 const sky=new THREE.Mesh(new THREE.PlaneGeometry(2,2),new THREE.ShaderMaterial({uniforms:U,depthTest:false,depthWrite:false,
  vertexShader:'varying vec2 v;void main(){v=uv;gl_Position=vec4(position.xy,.9999,1.);}',
- fragmentShader:`uniform vec3 c1,c2,g;uniform float ga,t;uniform vec2 gp;varying vec2 v;
+ fragmentShader:`uniform vec3 c1,c2,g;uniform float ga,t,oc,asp;uniform vec2 gp;varying vec2 v;
+ float h1(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+ float nz(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h1(i),h1(i+vec2(1,0)),f.x),mix(h1(i+vec2(0,1)),h1(i+vec2(1,1)),f.x),f.y);}
+ float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*nz(p);p*=2.03;a*=.5;}return s;}
+ vec3 ocean(vec2 u){
+  vec2 q=vec2((u.x-.5)*asp,u.y);
+  vec3 o=mix(vec3(.01,.06,.24),vec3(.16,.52,.86),pow(u.y,1.15));
+  float x=q.x+(1.-u.y)*.35;
+  float ray=(sin(x*11.+t*.25)*.5+.5)*(sin(x*4.3-t*.13+1.7)*.5+.5);
+  o+=vec3(.55,.85,1.)*pow(ray,3.)*smoothstep(.05,1.,u.y)*.55;
+  float cs=nz(q*vec2(14.,26.)+vec2(t*.35,-t*.2))*nz(q*vec2(22.,12.)-vec2(t*.25,t*.3));
+  o+=vec3(.7,.95,1.)*smoothstep(.25,.55,cs)*smoothstep(.72,1.,u.y)*.22;
+  float side=pow(abs(u.x-.5)*2.,2.2);
+  float hh=.08+.2*fbm(vec2(q.x*3.,1.7))+.34*side+.05*sin(q.x*9.);
+  float n2=fbm(q*9.+vec2(0.,t*.02));
+  float cor=smoothstep(hh+.015,hh-.015,u.y+(n2-.5)*.06);
+  vec3 cc=mix(vec3(1.,.36,.72),vec3(.42,.28,.86),fbm(q*4.));
+  cc*=.55+.6*n2;cc=mix(cc,o,.2+.3*(1.-side)*smoothstep(0.,.3,u.y));
+  o=mix(o,cc,cor);
+  o+=vec3(.9,.95,1.)*pow(h1(floor(q*180.)+floor(t*2.)),60.)*.5;
+  return o;}
  void main(){vec3 c=mix(c2,c1,smoothstep(0.,1.,v.y));
   float d=distance(v,gp+vec2(sin(t*.07)*.05,cos(t*.05)*.04));c+=g*ga*smoothstep(.75,0.,d);
   float a=smoothstep(.2,1.,v.y)*ga*.5;c+=vec3(.0,.35,.4)*a*(.5+.5*sin(v.x*9.+t*.25+v.y*4.))*.25;
+  if(oc>.001)c=mix(c,ocean(v),oc);
   gl_FragColor=vec4(c,1.);
   #include <colorspace_fragment>
  }`}));
@@ -726,6 +793,40 @@ const sg=new THREE.BufferGeometry(),sp=[];for(let i=0;i<(small?500:900);i++)sp.p
 sg.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));
 const stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xdfe8ff,size:.07,transparent:true,opacity:0,depthWrite:false}));S.add(stars);
 
+/* đại dương ở màn kết: sứa phát sáng, bọt khí; ẩn cho tới khi cửa sổ mở */
+const sea=new THREE.Group();sea.visible=false;S.add(sea);const seaMats=[];
+const glowTex=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d'),r=g.createRadialGradient(64,64,0,64,64,64);
+ r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.35,'rgba(255,255,255,.35)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,128,128);
+ const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;return tx})();
+const jellies=[];
+function jelly(col,x,y,z,s){
+ const g=new THREE.Group();g.position.set(x,y,z);g.scale.setScalar(s);
+ const bm2=new THREE.MeshPhysicalMaterial({color:col,emissive:col,emissiveIntensity:.55,roughness:.25,transparent:true,opacity:.5,side:THREE.DoubleSide,depthWrite:false,iridescence:1,iridescenceIOR:1.4});
+ const bell=new THREE.Mesh(new THREE.SphereGeometry(1,small?24:36,small?10:16,0,Math.PI*2,0,Math.PI*.55),bm2);g.add(bell);
+ const inner=new THREE.Mesh(new THREE.SphereGeometry(.55,20,10,0,Math.PI*2,0,Math.PI*.5),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.35,blending:THREE.AdditiveBlending,depthWrite:false}));inner.position.y=.05;g.add(inner);
+ const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color:col,transparent:true,opacity:.55,blending:THREE.AdditiveBlending,depthWrite:false}));halo.scale.set(4.2,3.6,1);halo.position.y=-.2;g.add(halo);
+ const N=small?6:10,M=22,tg=new THREE.BufferGeometry(),tp=new Float32Array(N*M*2*3);
+ tg.setAttribute('position',new THREE.BufferAttribute(tp,3));
+ const tm=new THREE.LineBasicMaterial({color:col,transparent:true,opacity:.75,blending:THREE.AdditiveBlending,depthWrite:false});
+ const ten=new THREE.LineSegments(tg,tm);g.add(ten);
+ seaMats.push([bm2,.5],[inner.material,.35],[halo.material,.55],[tm,.75]);
+ g.userData={x,y,z,N,M,tp,tg,bell,ph:Math.random()*6.28,sp:.25+Math.random()*.2};sea.add(g);jellies.push(g);
+}
+jelly(0x9fe7ff,-4.6,.9,-2,.95);jelly(0xff9ef0,4.9,-.6,-1,1.15);jelly(0xbfd4ff,2.7,-2.1,-3,.45);if(!small)jelly(0xe0b8ff,-2.2,2.9,-6,.5);
+function animJelly(g,t){
+ const u=g.userData,pl=Math.sin(t*1.6+u.ph);
+ g.position.y=u.y+Math.sin(t*u.sp+u.ph)*.45;g.position.x=u.x+Math.sin(t*.13+u.ph)*.3;
+ u.bell.scale.set(1+pl*.06,.85-pl*.1,1+pl*.06);g.rotation.z=Math.sin(t*.4+u.ph)*.12;
+ let k=0;const a=u.tp;
+ for(let i=0;i<u.N;i++){const an=i/u.N*6.283,rx=Math.cos(an)*.7,rz=Math.sin(an)*.7;let px=rx,py=-.05,pz=rz;
+  for(let j=1;j<=u.M;j++){const d=j/u.M,nx=rx*(1-d*.5)+Math.sin(t*2.1+j*.35+i)*.18*d,ny=-.05-j*.16,nz=rz*(1-d*.5)+Math.cos(t*1.7+j*.3+i)*.18*d;
+   a[k++]=px;a[k++]=py;a[k++]=pz;a[k++]=nx;a[k++]=ny;a[k++]=nz;px=nx;py=ny;pz=nz}}
+ u.tg.attributes.position.needsUpdate=true;
+}
+const BN=small?40:90,bubG=new THREE.SphereGeometry(1,10,8),bubM=new THREE.MeshBasicMaterial({color:0xe8f8ff,transparent:true,opacity:.45,depthWrite:false});
+const rise=new THREE.InstancedMesh(bubG,bubM,BN);sea.add(rise);seaMats.push([bubM,.45]);
+const bd=[];for(let i=0;i<BN;i++)bd.push([(Math.random()-.5)*20,Math.random()*16-8,-Math.random()*8,.03+Math.random()*.09,.4+Math.random()*.9,Math.random()*6.28]);
+const m4=new THREE.Matrix4(),v3=new THREE.Vector3(),q4=new THREE.Quaternion(),s3=new THREE.Vector3();
 S.add(new THREE.HemisphereLight(0xfff1f6,0x5b3fc4,1.3));
 const sun=new THREE.DirectionalLight(0xffd8c8,2.2);sun.position.set(-4,6,5);S.add(sun);
 const rim=new THREE.PointLight(0x00f0ff,18,16);rim.position.set(3,1,3);S.add(rim);
@@ -741,7 +842,7 @@ const ST={
  work:    {c1:0x0d0730,c2:0x07041a,g:0x5328ff,ga:.2,land:0,stars:.5,x:.95,y:.75,s:.32,mx:.7,my:.85,ms:.25},
  ai:      {c1:0x1f1066,c2:0x0a0526,g:0x5328ff,ga:.6,land:0,stars:1,x:.5,y:-.05,s:1,mx:.55,my:.86,ms:.3},
  xp:      {c1:0x130a40,c2:0x080420,g:0xe46be8,ga:.3,land:0,stars:.7,x:-.9,y:-.6,s:.42,mx:-.6,my:-.8,ms:.3},
- contact: {c1:0x2c1275,c2:0x0b0628,g:0xff9e8a,ga:.45,land:0,stars:1,x:0,y:.5,s:.55,mx:0,my:.62,ms:.42}
+ contact: {c1:0x150b46,c2:0x07041a,g:0x5bb8ff,ga:.3,land:0,stars:.6,x:.05,y:.3,s:.85,mx:0,my:.42,ms:.6}
 };
 const anchors=[...document.querySelectorAll('[data-scene]')];let tops=[];
 const measure=()=>{tops=anchors.map(a=>a.getBoundingClientRect().top+scrollY)};
@@ -766,6 +867,9 @@ const cur={x:.42,y:.12,s:1,ga:.35,land:1,stars:0},c1=new THREE.Color(0xe4ddf0),c
 const clock=new THREE.Clock();let last=0,run=!document.hidden;
 document.addEventListener('visibilitychange',()=>{run=!document.hidden;if(run)requestAnimationFrame(loop)});
 const minDt=small?1/30:0;let acc=0;
+const starO=()=>cur.stars*.85;
+function world(o){U.oc.value=o?1:0;sea.visible=o;bubs.forEach(b=>b.visible=!o);frames.forEach(f=>f.visible=!o);
+ stars.material.opacity=o?0:starO();rim.color.setHex(o?0x7fdcff:0x00f0ff)}
 function loop(){if(!run)return;requestAnimationFrame(loop);
  const now=clock.getElapsedTime();if(small&&now-acc<minDt-.002)return;acc=now;
  const t=calm?0:now,dt=Math.min(now-last,.06)||.016;last=now;
@@ -784,10 +888,21 @@ function loop(){if(!run)return;requestAnimationFrame(loop);
  halo.intensity=(1-cur.land)*14;
  land.position.y=-3.4-(1-cur.land)*9;land.visible=cur.land>.01;
  sun.intensity=.8+cur.land*1.4;
+ U.asp.value=C.aspect;
  stars.material.opacity=cur.stars*.85;stars.rotation.y=t*.006;stars.position.y=(scrollY*.002)%8;
  const sy=scrollY*.0025;
  bubs.forEach(b=>{const u=b.userData;b.position.y=((u.y+sy+Math.sin(t*.6+u.p)*.35)+12)%24-12;b.rotation.y=t*.2});
- R.render(S,C);
+ const F=window.__fin,full=F.vis&&F.x<=.5&&F.y<=.5&&F.w>=W-1&&F.h>=H-1;
+ if(!full){world(false);R.setScissorTest(false);R.render(S,C)}
+ if(F.vis){
+  jellies.forEach(g=>animJelly(g,t));
+  for(let i=0;i<BN;i++){const b=bd[i],y=((b[1]+t*b[4])%16+16)%16-8;v3.set(b[0]+Math.sin(t*1.3+b[5])*.15,y,b[2]);s3.setScalar(b[3]);m4.compose(v3,q4,s3);rise.setMatrixAt(i,m4)}
+  rise.instanceMatrix.needsUpdate=true;
+  world(true);
+  const x=Math.max(0,F.x),y=Math.max(0,F.y),w=Math.min(W,F.x+F.w)-x,h=Math.min(H,F.y+F.h)-y;
+  if(w>0&&h>0){R.setScissorTest(true);R.setScissor(x,H-y-h,w,h);R.render(S,C);R.setScissorTest(false)}
+  world(false);
+ }
 }
 requestAnimationFrame(loop);
 </script>
