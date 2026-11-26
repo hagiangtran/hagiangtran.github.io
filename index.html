@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="data.js?v=20261126b"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <style>
 :root{
  --night:#0b0628;--ink:#20174e;--violet:#5328ff;--cyan:#00f0ff;--pink:#e46be8;--peach:#ff9e8a;
@@ -22,7 +23,8 @@
  --pad:clamp(16px,4.5vw,56px);--max:1320px;--r:24px;--ease:cubic-bezier(.2,.7,.2,1)
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:100px;-webkit-text-size-adjust:100%}
+html{scroll-padding-top:100px;-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-stopped{overflow:hidden}
 body{font-family:var(--f);background:var(--night);color:#fff;font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body.lock{overflow:hidden}
 a{color:inherit;text-decoration:none}img,video{max-width:100%}
@@ -248,12 +250,12 @@ h1 span{display:block}
 /* ===== 10. màn kết: cửa sổ mở ra "đại dương ánh sáng" ===== */
 .finale{position:relative;height:330vh}
 .fin-stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
-.portal{position:absolute;left:50%;top:50%;width:var(--pw,62vw);height:var(--ph,58vh);transform:translate(-50%,-50%);border-radius:var(--pr,30px);
- box-shadow:0 0 0 200vmax #07041a,0 0 80px 10px rgba(80,160,255,.35) inset;pointer-events:none}
-.fin-hint{position:absolute;left:0;right:0;bottom:6vh;text-align:center;font-size:.82rem;color:var(--t2);opacity:var(--hint,1)}
+.portal{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:46px;transform:scale(.62,.58);transform-origin:50% 50%;will-change:transform;
+ box-shadow:0 0 0 200vmax #07041a,0 0 120px 20px rgba(80,160,255,.35) inset;pointer-events:none}
+.fin-hint{position:absolute;left:0;right:0;bottom:6vh;text-align:center;font-size:.82rem;color:var(--t2);will-change:opacity}
 .fin-hint::after{content:"";display:block;width:1px;height:34px;margin:10px auto 0;background:linear-gradient(#fff,transparent);animation:bob 2s ease-in-out infinite}
 .fin-ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:0 var(--pad) calc(18px + env(safe-area-inset-bottom));
- opacity:var(--ui,0);transform:translateY(calc((1 - var(--ui,0)) * 40px));visibility:var(--uiv,hidden)}
+ opacity:0;visibility:hidden;will-change:opacity,transform}
 .fin-logo{display:inline-flex;align-items:center;gap:9px;font-weight:500;font-size:1.6rem;letter-spacing:-.02em;text-shadow:0 2px 20px rgba(0,30,80,.4)}
 .fin-logo i{width:28px;height:28px;border-radius:50% 50% 50% 12%;background:linear-gradient(135deg,var(--peach),var(--pink) 45%,var(--violet));box-shadow:0 0 22px rgba(255,140,220,.7)}
 .fin-h{font-weight:400;font-size:clamp(2.4rem,6.6vw,6rem);line-height:1.04;letter-spacing:-.035em;margin:10px 0 0;text-shadow:0 4px 40px rgba(0,30,90,.45)}
@@ -351,17 +353,19 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
  dialog{width:100vw}dialog .x{right:8px;top:-50px}
 }
 /* máy cảm ứng / màn nhỏ: bỏ hiệu ứng làm mờ kính (rất tốn GPU khi nền 3D chuyển động), dùng nền đặc hơn */
-@media(max-width:860px),(pointer:coarse){
- .grain{display:none}
- .step,.chc,.aic,.panel,.xplist,.skbox,.stats div,.me,.links a,.go.g,.dive,.chip,.screen .rtag,.pl,.av .tagv{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+/* không dùng backdrop-filter trên thẻ nội dung: nền 3D chuyển động liên tục nên mỗi thẻ mờ phải tính lại mỗi khung hình */
+.step,.chc,.aic,.panel,.xplist,.skbox,.stats div,.me,.go.g,.dive,.chip,.screen .rtag,.pl,.av .tagv{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.chip{background:rgba(255,255,255,.55)}.dive{background:linear-gradient(150deg,rgba(150,120,255,.92),rgba(110,80,235,.88))}
+.go.g{background:rgba(30,20,80,.6)}.screen .rtag{background:rgba(11,6,40,.75)}.pl{background:rgba(20,12,60,.55)}
+@media all{
  .panel,.xplist{background:rgba(11,6,40,.82)}
  .stats div,.me{background:rgba(20,12,60,.72)}
  .aic{background:linear-gradient(170deg,rgba(32,20,110,.92),rgba(11,6,40,.9))}
  .chc{background:linear-gradient(175deg,rgba(83,40,255,.7),rgba(46,25,140,.65) 45%,rgba(11,6,40,.8))}
  .step{background:linear-gradient(170deg,rgba(83,40,255,.55),rgba(32,23,78,.7) 60%,rgba(11,6,40,.75))}
  .skbox{background:linear-gradient(170deg,rgba(83,40,255,.55),rgba(11,6,40,.85))}
- .card:hover,.chc:hover,.aic:hover,.dive:hover{transform:none}
 }
+@media(hover:none){.card:hover,.chc:hover,.aic:hover,.dive:hover{transform:none}}
 .swipe{display:none;align-items:center;gap:8px;margin-top:4px;font-size:.78rem;color:var(--t2)}
 .swipe::after{content:"";width:34px;height:1px;background:currentColor;animation:sw 1.8s ease-in-out infinite}
 @keyframes sw{50%{transform:translateX(8px)}}
@@ -370,7 +374,6 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
 </head>
 <body>
 <canvas id="world" aria-hidden="true"></canvas>
-<div class="grain"></div>
 
 <nav id="nav">
  <a class="ann" id="annLink" target="_blank" rel="noopener"><b data-i="annTag"></b><span data-i="ann"></span><em class="sh">Portfolio AI Builder</em><i data-i="annGo"></i></a>
@@ -647,21 +650,21 @@ function openP(i){
   :isGif(p.file)?`<img src="${p.file}" alt="${esc(p.title[lang])}">`
   :`<video src="${p.file}" controls autoplay loop playsinline></video>`;
  $('#cap').innerHTML=esc(p.title[lang]+' — '+p.note[lang])+(p.type==='youtube'?` · <a href="https://www.youtube.com/watch?v=${p.yt}" target="_blank" rel="noopener">${T('onYt')} ↗</a>`:'');
- $('#dlg').showModal();
+ $('#dlg').showModal();if(window.__lenis)__lenis.stop();
 }
-const setMenu=o=>{$('#nav').classList.toggle('open',o);$('#burger').setAttribute('aria-expanded',o);document.body.classList.toggle('lock',o)};
+const setMenu=o=>{$('#nav').classList.toggle('open',o);$('#burger').setAttribute('aria-expanded',o);document.body.classList.toggle('lock',o);if(window.__lenis)o?__lenis.stop():__lenis.start()};
 
 document.addEventListener('click',e=>{
  const l=e.target.closest('[data-lang]');if(l){lang=l.dataset.lang;try{localStorage.setItem('lang',lang)}catch(_){}render();return}
  const f=e.target.closest('[data-f]');if(f){filter=f.dataset.f;render();return}
- const m=e.target.closest('[data-more]');if(m){const k=m.dataset.more,was=open[k];open[k]=!was;render();if(was){const g=$(`.grp[data-k="${k}"]`);if(g)g.scrollIntoView({block:'start'})}return}
+ const m=e.target.closest('[data-more]');if(m){const k=m.dataset.more,was=open[k];open[k]=!was;render();if(was){const g=$(`.grp[data-k="${k}"]`);if(g)goTo(g,-100)}return}
  const c=e.target.closest('.card');if(c){openP(+c.dataset.p);return}
  if(e.target.closest('#burger')){setMenu(!$('#nav').classList.contains('open'));return}
  if(e.target.closest('#links a'))setMenu(false);
  if(e.target.id==='close'||e.target.id==='dlg')$('#dlg').close();
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
-$('#dlg').addEventListener('close',()=>{$('#stage').innerHTML=''});
+$('#dlg').addEventListener('close',()=>{$('#stage').innerHTML='';if(window.__lenis)__lenis.start()});
 if(matchMedia('(hover:hover)').matches){
  document.addEventListener('mouseover',e=>{const v=e.target.closest('.card')?.querySelector('video:not([data-auto])');if(v)v.play().catch(()=>{})});
  document.addEventListener('mouseout',e=>{const c=e.target.closest('.card');if(c&&!c.contains(e.relatedTarget)){const v=c.querySelector('video:not([data-auto])');if(v){v.pause();v.currentTime=.1}}});
@@ -676,23 +679,35 @@ if(matchMedia('(hover:hover)').matches){
  new IntersectionObserver(([e])=>{inV=e.isIntersecting;if(inV&&!calm)v.play().catch(()=>{});else v.pause()},{threshold:.3}).observe(v);
  set();})();
 
-/* màn kết: tiến độ cuộn p (0..1) -> kích thước cửa sổ, chữ hiện dần; chia sẻ cho cảnh 3D qua window.__fin */
-const fin=$('#contact'),fs=$('#finStick');window.__fin={p:0,vis:false,x:0,y:0,w:0,h:0};
+/* ===== một vòng requestAnimationFrame duy nhất: cuộn mượt (Lenis) + màn kết; không đọc layout mỗi khung hình ===== */
+const fin=$('#contact'),fs=$('#finStick'),portal=fs.querySelector('.portal'),fui=fs.querySelector('.fin-ui'),fhint=fs.querySelector('.fin-hint');
+window.__fin={p:0,vis:false,x:0,y:0,w:0,h:0};
 const ss=(a,b,x)=>{x=Math.min(Math.max((x-a)/(b-a),0),1);return x*x*(3-2*x)};
+const lenis=(window.Lenis&&!calm)?new Lenis({lerp:.085,smoothWheel:true,wheelMultiplier:1}):null;window.__lenis=lenis;
+let finTop=0,finH=0,lastY=-1,lastW=0;
+const finMeasure=()=>{finTop=fin.getBoundingClientRect().top+scrollY;finH=fin.offsetHeight;lastY=-1};
 function finUpdate(){
- const r=fin.getBoundingClientRect(),span=fin.offsetHeight-innerHeight;
- const p=Math.min(Math.max(-r.top/span,0),1),g=ss(.06,.5,p),ui=ss(.55,.78,p),port=innerWidth<innerHeight;
- const w0=port?84:62,h0=port?52:58;
- fs.style.setProperty('--pw',(w0+(100-w0)*g)+'vw');fs.style.setProperty('--ph',(h0+(100-h0)*g)+'vh');
- fs.style.setProperty('--pr',(30*(1-g))+'px');fs.style.setProperty('--ui',ui);fs.style.setProperty('--uiv',ui>.02?'visible':'hidden');
- fs.style.setProperty('--hint',1-ss(.02,.12,p));document.body.classList.toggle('finui',ui>.3);
- const pr=fs.querySelector('.portal').getBoundingClientRect();
- Object.assign(window.__fin,{p,x:pr.left,y:pr.top,w:pr.width,h:pr.height,vis:pr.bottom>0&&pr.top<innerHeight&&r.bottom>0});
+ const y=lenis?lenis.scroll:scrollY,W=innerWidth,H=innerHeight;if(y===lastY&&W===lastW)return;lastY=y;lastW=W;
+ const span=Math.max(finH-H,1),p=Math.min(Math.max((y-finTop)/span,0),1);
+ const stickTop=y<finTop?finTop-y:(y>finTop+span?finTop+span-y:0);
+ const g=ss(.06,.5,p),ui=ss(.55,.78,p),port=W<H;
+ const s0x=port?.84:.62,s0y=port?.52:.58,end=Math.max(1.1,1+130/Math.min(W,H));
+ const sx=s0x+(end-s0x)*g,sy=s0y+(end-s0y)*g;
+ portal.style.transform=`scale(${sx.toFixed(4)},${sy.toFixed(4)})`;
+ fui.style.opacity=ui.toFixed(3);fui.style.transform=`translate3d(0,${((1-ui)*40).toFixed(1)}px,0)`;fui.style.visibility=ui>.02?'visible':'hidden';
+ fhint.style.opacity=(1-ss(.02,.12,p)).toFixed(3);
+ document.body.classList.toggle('finui',ui>.3);
+ const w=W*sx,h=H*sy;
+ Object.assign(window.__fin,{p,w,h,x:(W-w)/2,y:stickTop+(H-h)/2,vis:stickTop<H&&stickTop+H>0});
 }
-addEventListener('scroll',finUpdate,{passive:true});addEventListener('resize',finUpdate);finUpdate();
-/* link "Liên hệ" nhảy thẳng tới cuối màn kết, nơi có nút liên hệ */
-document.addEventListener('click',e=>{const a=e.target.closest('a[href="#contact"]');if(!a)return;e.preventDefault();setMenu(false);
- scrollTo({top:fin.offsetTop+fin.offsetHeight-innerHeight,behavior:calm?'auto':'smooth'})},true);
+function tick(time){if(lenis)lenis.raf(time);finUpdate();requestAnimationFrame(tick)}
+finMeasure();addEventListener('resize',finMeasure);addEventListener('load',finMeasure);new ResizeObserver(finMeasure).observe(document.body);
+requestAnimationFrame(tick);
+/* mọi link "#..." cuộn mượt bằng Lenis; "Liên hệ" nhảy thẳng tới cuối màn kết */
+const goTo=(to,off=0)=>{if(lenis)lenis.scrollTo(to,{offset:off,duration:1.4});else if(typeof to==='number')scrollTo({top:to});else to.scrollIntoView()};
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const id=a.getAttribute('href');
+ const el=id==='#top'?0:id==='#contact'?finTop+finH-innerHeight:document.querySelector(id);if(el==null)return;
+ e.preventDefault();setMenu(false);goTo(el,typeof el==='number'?0:-90)},true);
 const onScroll=()=>{const n=$('#nav');n.classList.toggle('sc',scrollY>40);n.classList.toggle('dk',scrollY>innerHeight*.6)};
 addEventListener('scroll',onScroll,{passive:true});onScroll();
 const links=$$('#links a[href^="#"]');
@@ -715,7 +730,7 @@ const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
 /* điện thoại: độ phân giải thấp hơn, không khử răng cưa, bong bóng không khúc xạ, tối đa 30 khung hình/giây */
 const small=innerWidth<760||matchMedia('(pointer:coarse)').matches;
 const R=new THREE.WebGLRenderer({canvas:cv,antialias:!small,powerPreference:small?'default':'high-performance'});
-R.setPixelRatio(Math.min(devicePixelRatio,small?1.25:1.6));
+let PR=Math.min(devicePixelRatio,small?1.25:1.5);R.setPixelRatio(PR);
 R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.05;
 const S=new THREE.Scene();
 const C=new THREE.PerspectiveCamera(40,1,.1,120);C.position.set(0,0,10);
@@ -781,7 +796,7 @@ for(let k=0;k<3;k++){const f=new THREE.Mesh(new RoundedBoxGeometry(1.1,.68,.08,4
 const halo=new THREE.PointLight(0xb48cff,0,10);hero.add(halo);
 
 /* bong bóng thủy tinh rải khắp không gian */
-const bm=small
+const bm=true
  ?new THREE.MeshPhysicalMaterial({color:0xf2ecff,roughness:0,metalness:.1,transparent:true,opacity:.28,depthWrite:false,iridescence:1,iridescenceIOR:1.3,iridescenceThicknessRange:[100,700],envMapIntensity:1.4})
  :new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0,transmission:1,thickness:.2,ior:1.1,iridescence:1,iridescenceIOR:1.3,iridescenceThicknessRange:[100,700],envMapIntensity:.9});
 const bg=small?new THREE.SphereGeometry(1,28,18):new THREE.SphereGeometry(1,40,28),bubs=[];
@@ -866,13 +881,14 @@ let mx=0,my=0,tx=0,ty=0;addEventListener('pointermove',e=>{tx=e.clientX/W-.5;ty=
 const cur={x:.42,y:.12,s:1,ga:.35,land:1,stars:0},c1=new THREE.Color(0xe4ddf0),c2=new THREE.Color(0xb08fe6),gl=new THREE.Color(0xffd6ea);
 const clock=new THREE.Clock();let last=0,run=!document.hidden;
 document.addEventListener('visibilitychange',()=>{run=!document.hidden;if(run)requestAnimationFrame(loop)});
-const minDt=small?1/30:0;let acc=0;
+const minDt=small?1/30:0;let acc=0,fN=0,fT=0;
 const starO=()=>cur.stars*.85;
 function world(o){U.oc.value=o?1:0;sea.visible=o;bubs.forEach(b=>b.visible=!o);frames.forEach(f=>f.visible=!o);
  stars.material.opacity=o?0:starO();rim.color.setHex(o?0x7fdcff:0x00f0ff)}
 function loop(){if(!run)return;requestAnimationFrame(loop);
  const now=clock.getElapsedTime();if(small&&now-acc<minDt-.002)return;acc=now;
  const t=calm?0:now,dt=Math.min(now-last,.06)||.016;last=now;
+ fN++;fT+=dt;if(fN>=90){const avg=fT/fN;fN=0;fT=0;if(avg>(small?1/26:1/48)&&PR>1){PR=Math.max(1,PR-.25);R.setPixelRatio(PR);R.setSize(W,H,false)}}
  const st=stateAt(scrollY+H*.5),k=1-Math.pow(.0015,dt);
  for(const q of ['x','y','s','ga','land','stars'])cur[q]+=(st[q]-cur[q])*k;
  ca.set(st.a.c1).lerp(cb.set(st.b.c1),st.t);c1.lerp(ca,k);
