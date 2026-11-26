@@ -190,7 +190,6 @@ h1 span{display:block}
 .pl{position:absolute;right:10px;bottom:10px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:background .3s}
 .pl::after{content:"";border-left:10px solid #fff;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:3px}
 .card:hover .pl{background:var(--violet)}
-.newb{position:absolute;left:14px;top:14px;z-index:2;padding:3px 9px;border-radius:100px;background:var(--grad);font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
 .meta{padding:12px 7px 0}
 .meta small{font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#d6ccff}
 .meta h4{font-weight:400;font-size:1rem;letter-spacing:-.01em;line-height:1.35;margin-top:3px}
@@ -224,9 +223,9 @@ h1 span{display:block}
 
 /* ===== 8. dải công cụ ===== */
 .marq{position:relative;z-index:2;overflow:hidden;padding:14px 0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.mt-in{display:flex;gap:12px;width:max-content;animation:mq 46s linear infinite}
-.marq.rev .mt-in{animation-direction:reverse;animation-duration:54s}
-.mt-in span{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:100px;border:1px solid rgba(0,240,255,.55);background:rgba(0,240,255,.08);color:#bffbff;font-size:.9rem;white-space:nowrap;box-shadow:0 0 18px rgba(0,240,255,.15) inset}
+.mt-in{display:flex;width:max-content;animation:mq 46s linear infinite}
+.marq.rev .mt-in{animation-direction:reverse}
+.mt-in span{display:inline-flex;align-items:center;gap:8px;margin-right:12px;padding:10px 20px;border-radius:100px;border:1px solid rgba(0,240,255,.55);background:rgba(0,240,255,.08);color:#bffbff;font-size:.9rem;white-space:nowrap;box-shadow:0 0 18px rgba(0,240,255,.15) inset}
 .mt-in span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
 @keyframes mq{to{transform:translateX(-50%)}}
 
@@ -614,20 +613,26 @@ function render(){
  }).join('')||`<div class="empty">${T('empty')}</div>`;
  $('#flow').innerHTML=X[lang].flow.map((f,i)=>`<span><b>0${i+1}</b>${f}</span>`).join('');
  $('#stair').innerHTML=AIP.map((a,i)=>`<a class="aic reveal d${i}" href="${AI_URL}" target="_blank" rel="noopener"><span class="tg">${esc(a.tag[lang])}</span><h3>${esc(a.title[lang])}</h3><p>${esc(a.desc[lang])}</p><div class="mt"><b>${esc(a.metric)}</b><span>${esc(a.mlabel[lang])}</span></div><div class="tech">${a.tech.map(t=>`<span>${esc(t)}</span>`).join('')}</div><span class="lk">${T('aiMore')}${ext}</span></a>`).join('');
- const mq=a=>{const s=a.map(t=>`<span>${t}</span>`).join('');return s+s};
- $('#mq1').innerHTML=mq(TOOLS1);$('#mq2').innerHTML=mq(TOOLS2);
+ $('#mq1').innerHTML=TOOLS1.map(t=>`<span>${t}</span>`).join('');$('#mq2').innerHTML=TOOLS2.map(t=>`<span>${t}</span>`).join('');fillMarq();
  $('#exp').innerHTML=L[lang].exp.map(e=>`<div class="ex"><div class="d">${esc(e[1])}</div><div><h3>${esc(e[0])}</h3><p>${esc(e[2])}</p></div></div>`).join('');
  $('#skills').innerHTML=SKILLS.map(s=>`<div><b>${esc(s[0])}</b><i style="--w:${s[1]}%"></i></div>`).join('');
  layout();watch();
 }
 
+/* dải chạy: lặp danh sách tới khi nửa dải dài hơn màn hình, rồi nhân đôi để dịch -50% không bị hở; tốc độ cố định */
+function fillMarq(){$$('.mt-in').forEach(el=>{
+ const src=el.innerHTML,one=el.scrollWidth||1,n=Math.max(1,Math.ceil(innerWidth*1.15/one));
+ const half=src.repeat(n);el.innerHTML=half+half;
+ el.style.animationDuration=(one*n/(el.closest('.rev')?48:55)).toFixed(1)+'s'})}
+let mqW=innerWidth;addEventListener('resize',()=>{if(Math.abs(innerWidth-mqW)>40){mqW=innerWidth;render()}});
+document.fonts&&document.fonts.ready.then(()=>render());
 function card(p){
  const i=PROJECTS.indexOf(p);
  let m;
  if(p.type==='youtube')m=`<img loading="lazy" src="${p.thumb||`https://i.ytimg.com/vi/${p.yt}/hqdefault.jpg`}" alt=""><span class="pl"></span>`;
  else if(isGif(p.file))m=`<img loading="lazy" src="${p.thumb||p.file}" alt="">`;
  else m=`<video muted loop playsinline preload="${p.auto||p.thumb?'none':'metadata'}"${p.auto?'data-auto':''} ${p.thumb?`poster="${p.thumb}"`:''} src="${p.file}${p.thumb?'':'#t=0.1'}"></video>${p.auto?'':'<span class="pl"></span>'}`;
- return `<button type="button" class="card${p.type==='youtube'&&!p.thumb?' yt':''}" data-p="${i}" aria-label="${esc(p.title[lang])}">${p.isNew?`<span class="newb">${T('newTag')}</span>`:''}<div class="media">${m}</div><div class="meta"><small>${T(p.type)}</small><h4>${esc(p.title[lang])}</h4><p>${esc(p.note[lang])}</p></div></button>`;
+ return `<button type="button" class="card${p.type==='youtube'&&!p.thumb?' yt':''}" data-p="${i}" aria-label="${esc(p.title[lang])}"><div class="media">${m}</div><div class="meta"><small>${T(p.type)}</small><h4>${esc(p.title[lang])}</h4><p>${esc(p.note[lang])}</p></div></button>`;
 }
 
 /* Tự nhận khung hình: video nào lệch nhiều so với khung thì hiện trọn (contain) */

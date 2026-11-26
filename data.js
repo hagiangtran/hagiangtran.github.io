@@ -34,14 +34,14 @@ const PROJECTS = [
   {type:"motion", auto:true, file:"assets/media/motion-4.mp4", thumb:"assets/media/motion-4.jpg",
    title:{vi:"Motion 4", en:"Motion 4"}, note:{vi:"Motion graphics", en:"Motion graphics"}},
 
-  /* ---- SOCIAL (4 video thẩm mỹ mới ở đầu, isNew:true = gắn nhãn "Mới") ---- */
-  {type:"social", isNew:true, file:"assets/media/tham-my-1.mp4", thumb:"assets/media/tham-my-1.jpg",
+  /* ---- SOCIAL (4 video thẩm mỹ ở đầu) ---- */
+  {type:"social", file:"assets/media/tham-my-1.mp4", thumb:"assets/media/tham-my-1.jpg",
    title:{vi:"Lấy lại vẻ ngoài trẻ trung", en:"Regain a youthful look"}, note:{vi:"Video thẩm mỹ · 1:07", en:"Aesthetic clinic video · 1:07"}},
-  {type:"social", isNew:true, file:"assets/media/tham-my-2.mp4", thumb:"assets/media/tham-my-2.jpg",
+  {type:"social", file:"assets/media/tham-my-2.mp4", thumb:"assets/media/tham-my-2.jpg",
    title:{vi:"Mẹ bỉm lấy lại tự tin với Eye Rejuv", en:"A new mom regains confidence with Eye Rejuv"}, note:{vi:"Video thẩm mỹ · 0:25", en:"Aesthetic clinic video · 0:25"}},
-  {type:"social", isNew:true, file:"assets/media/tham-my-3.mp4", thumb:"assets/media/tham-my-3.jpg",
+  {type:"social", file:"assets/media/tham-my-3.mp4", thumb:"assets/media/tham-my-3.jpg",
    title:{vi:"Quầng thâm mắt sau sinh", en:"Postpartum dark circles"}, note:{vi:"Video thẩm mỹ · 1:00", en:"Aesthetic clinic video · 1:00"}},
-  {type:"social", isNew:true, file:"assets/media/tham-my-4.mp4", thumb:"assets/media/tham-my-4.jpg",
+  {type:"social", file:"assets/media/tham-my-4.mp4", thumb:"assets/media/tham-my-4.jpg",
    title:{vi:"Lấy lại chục tuổi chỉ sau 60 phút", en:"Ten years younger in just 60 minutes"}, note:{vi:"Video thẩm mỹ · 0:30", en:"Aesthetic clinic video · 0:30"}},
   {type:"social", file:"assets/media/tiktok1.mp4", thumb:"assets/media/tiktok1.jpg",
    title:{vi:"TikTok 1", en:"TikTok 1"}, note:{vi:"Video ngắn · 0:26", en:"Short-form · 0:26"}},
