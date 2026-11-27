@@ -460,6 +460,7 @@ dialog .x{position:absolute;right:0;top:-54px;height:44px;padding:0 18px;border-
  <div class="in">
   <span class="eyebrow reveal">Portfolio</span>
   <h2 class="h2 reveal" data-h="workT"></h2>
+  <p class="intro reveal" data-i="workNote"></p>
   <div class="panel reveal d1">
    <div class="filters" id="filters" role="group"></div>
    <div id="groups"></div>
@@ -531,15 +532,15 @@ const X={
  vi:{annTag:"Mới",ann:"Portfolio AI Builder: extension Premiere, pipeline phim AI và app mình tự xây",annGo:"Xem ngay →",
   chip:"Từ 2020",dive:"Cuộn xuống & khám phá",finHint:"Cuộn tiếp để lặn xuống",fPort:"Portfolio",fCont:"Liên hệ",swipe:"Vuốt để xem tiếp",fab:"Nhắn Zalo",onYt:"Xem trên YouTube",newTag:"Mới",
   lead:"Mình dựng những video khiến người xem <em>ở lại tới giây cuối.</em>",
-  s1:"năm làm nghề",s2:"sản phẩm trên web",s3:"kênh YouTube đã làm",s4:"lượt xem video cao nhất",
+  s1:"năm làm nghề",s2:"sản phẩm đã thực hiện",s3:"kênh YouTube đã làm video",s4:"lượt xem video cao nhất",
   reelT:"Chuyển động <em>có chủ đích</em>",seeAll:"Xem toàn bộ sản phẩm →",
   tagProc:"Cách mình làm",procT:"Từ kịch bản <em>tới bản xuất</em>",
   chT:"Những kênh YouTube <em>mình đã làm video</em>",
-  chIntro:"Đây là các kênh quiz quốc tế mình trực tiếp làm hình ảnh và dựng video. Mỗi thẻ là một kênh thật đang hoạt động, bấm vào để xem những video mình đã làm.",
+  chIntro:"Đây là 4 kênh tiêu biểu trong số nhiều kênh YouTube mình đã làm hình ảnh và dựng video. Mỗi thẻ là một kênh thật đang hoạt động, bấm vào để xem những video mình đã làm.",
   topLbl:"Video cao nhất mình làm",views:"lượt xem",openCh:"Xem video trên kênh",
-  workT:"Sản phẩm <em>đã thực hiện</em>",showMore:"Xem thêm {n} sản phẩm",showLess:"Thu gọn",
+  workT:"Sản phẩm <em>đã thực hiện</em>",workNote:"Một phần sản phẩm chọn lọc. Còn nhiều dự án khác mình chưa đưa lên đây, liên hệ để xem thêm.",showMore:"Xem thêm {n} sản phẩm",showLess:"Thu gọn",
   aiT:"Editor biết <em>tự xây công cụ AI</em>",
-  aiIntro:"Ngoài dựng video, mình tự xây công cụ AI để bỏ bớt những việc lặp lại trong hậu kỳ, từ cắt voice theo kịch bản tới làm phim AI. Toàn bộ dự án, ảnh chụp và file tải về nằm ở Portfolio AI Builder.",
+  aiIntro:"Ngoài dựng video, mình tự xây công cụ AI để bỏ bớt những việc lặp lại trong hậu kỳ, từ cắt voice theo kịch bản tới làm phim AI. Bốn dự án dưới đây chỉ là phần tiêu biểu; toàn bộ dự án, ảnh chụp và file tải về nằm ở Portfolio AI Builder.",
   aiOpen:"Mở Portfolio AI Builder",aiMore:"Xem chi tiết",
   flow:["Tìm điểm nghẽn","Mô tả bài toán","Chạy trên việc thật","Tối ưu tới khi dùng hằng ngày"],
   contactT:"Cùng làm <em>video tiếp theo</em> nhé",
@@ -549,15 +550,15 @@ const X={
  en:{annTag:"New",ann:"AI Builder portfolio: Premiere extensions, an AI film pipeline and apps I built",annGo:"Take a look →",
   chip:"Since 2020",dive:"Scroll down & explore",finHint:"Keep scrolling to dive in",fPort:"Portfolio",fCont:"Contact",swipe:"Swipe for more",fab:"Chat on Zalo",onYt:"Watch on YouTube",newTag:"New",
   lead:"I edit videos that keep people watching <em>until the very last second.</em>",
-  s1:"years in the craft",s2:"projects on this site",s3:"YouTube channels",s4:"views on my top video",
+  s1:"years in the craft",s2:"projects delivered",s3:"YouTube channels worked on",s4:"views on my top video",
   reelT:"Motion <em>with intent</em>",seeAll:"See all work →",
   tagProc:"How I work",procT:"From script <em>to final export</em>",
   chT:"YouTube channels <em>I made videos for</em>",
-  chIntro:"These are international quiz channels where I built the visuals and edited the videos. Every card is a real, active channel — tap one to watch the videos I made.",
+  chIntro:"These are 4 highlights from the many YouTube channels I have built visuals and edited videos for. Every card is a real, active channel — tap one to watch the videos I made.",
   topLbl:"My top video on this channel",views:"views",openCh:"Watch videos on the channel",
-  workT:"Selected <em>work</em>",showMore:"Show {n} more",showLess:"Show less",
+  workT:"Selected <em>work</em>",workNote:"A selection of my work. There are many more projects not shown here — get in touch to see more.",showMore:"Show {n} more",showLess:"Show less",
   aiT:"An editor who <em>builds his own AI tools</em>",
-  aiIntro:"Beyond editing, I build AI tools that remove repetitive post-production work, from cutting voice-overs by script to making AI films. Every project, screenshot and download lives in my AI Builder portfolio.",
+  aiIntro:"Beyond editing, I build AI tools that remove repetitive post-production work, from cutting voice-overs by script to making AI films. The four below are highlights; every project, screenshot and download lives in my AI Builder portfolio.",
   aiOpen:"Open the AI Builder portfolio",aiMore:"See details",
   flow:["Find the bottleneck","Describe the problem","Run it on real work","Refine until it's daily use"],
   contactT:"Let's make <em>your next video</em>",
@@ -597,7 +598,7 @@ function render(){
  $$('.aiurl').forEach(a=>a.href=AI_URL);$('#annLink').href=AI_URL;
  $('#close').textContent=T('close');
  const list=PROJECTS.filter(vis);
- $('#stats').innerHTML=[[(new Date().getFullYear()-2020)+'+',T('s1')],[list.length,T('s2')],[CHANNELS.length,T('s3')],[CHANNELS[0].top[lang],T('s4')]].map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
+ $('#stats').innerHTML=[[(new Date().getFullYear()-2020)+'+',T('s1')],[list.length+'+',T('s2')],[CHANNELS.length+'+',T('s3')],[CHANNELS[0].top[lang],T('s4')]].map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
  $('#steps').innerHTML=X[lang].steps.map((s,i)=>`<div class="step reveal d${i+1}"><small>${lang==='vi'?'Bước':'Step'} ${i+1}</small><h3>${s[0]}</h3><div class="tile"><video muted loop playsinline preload="none" data-auto poster="assets/media/${STEPV[i]}.jpg" src="assets/media/${STEPV[i]}.mp4"></video></div><p>${s[1]}</p></div>`).join('');
  $('#ch').innerHTML=CHANNELS.map((c,i)=>`<a class="chc reveal d${i%4}" href="${esc(c.url)}" target="_blank" rel="noopener"><small>${T('topLbl')}</small><div class="big">${esc(c.top[lang])}</div><div class="unit">${T('views')}</div><h3>${esc(c.name)}</h3><div class="subs">${esc(c.stat)}</div><div class="roles">${c.role[lang].map(r=>`<span>${esc(r)}</span>`).join('')}</div><p>${esc(c.desc[lang])}</p><span class="open">${T('openCh')}${ext}</span></a>`).join('');
  const keys=ORDER.filter(k=>list.some(p=>p.type===k));
@@ -855,7 +856,7 @@ const pink=new THREE.PointLight(0xff6fd8,22,16);pink.position.set(-3,-1,3);S.add
 /* trạng thái từng cảnh: màu trời, quầng sáng, đồi, sao, vị trí linh vật (toạ độ màn hình -1..1) */
 const ST={
  hero:    {c1:0xe4ddf0,c2:0xb08fe6,g:0xffd6ea,ga:.35,land:1,stars:0,x:.42,y:.12,s:1,  mx:0, my:.32,ms:.78},
- intro:   {c1:0x1d1158,c2:0x0b0628,g:0x5328ff,ga:.55,land:0,stars:1,x:.55,y:.02,s:.95,mx:.55,my:.84,ms:.38},
+ intro:   {c1:0x1d1158,c2:0x0b0628,g:0x5328ff,ga:.55,land:0,stars:1,x:.82,y:.18,s:.55,mx:.55,my:.84,ms:.38},
  reel:    {c1:0x120a3e,c2:0x07041a,g:0xe46be8,ga:.35,land:0,stars:.8,x:-.78,y:.62,s:.55,mx:-.55,my:.72,ms:.4},
  process: {c1:0x150b46,c2:0x090520,g:0x5328ff,ga:.4,land:0,stars:.7,x:.82,y:-.58,s:.5,mx:.6,my:-.75,ms:.35},
  channels:{c1:0x1a0e52,c2:0x080420,g:0x3b6bff,ga:.3,land:0,stars:.9,x:.86,y:.7,s:.45,mx:.6,my:.85,ms:.3},
